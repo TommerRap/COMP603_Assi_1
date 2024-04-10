@@ -23,8 +23,8 @@ public class AddCarIOUtil extends Thread{
                 BufferedWriter write = new BufferedWriter(new FileWriter("./data/"+car.getID()+".txt"));
                 write.write("ID:"+car.getID());
                 write.write("\nMake:"+car.getMake());
-                write.write("\nModel"+car.getModel());
-                write.write("\nYear"+car.getYear());
+                write.write("\nModel:"+car.getModel());
+                write.write("\nYear:"+car.getYear());
                 write.write("\nLicence Plate:"+car.getLicence());
                 write.write("\nFuel Type:"+car.getFuel());
                 write.write("\nPrice:"+car.getPrice());
