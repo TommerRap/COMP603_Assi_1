@@ -63,4 +63,9 @@ public class Util {
             er.printStackTrace();
         }
     }
+
+    public static void wait(int mills){
+        try{Thread.sleep(mills);}catch (InterruptedException e){e.printStackTrace();}
+
+    }
 }

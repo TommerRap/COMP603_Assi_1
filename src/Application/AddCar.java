@@ -3,19 +3,55 @@ package Application;
 import Models.Car;
 import Util.Util;
 
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class AddCar {
     public static void addPage(){
+        //Loop for the add car page
         while(true) {
+            Scanner sc = new Scanner(System.in);
+            Set<Car> cars = new HashSet();
+            Util.clearScreen();
             System.out.println("Please fill in details as instructed:");
-            addCar();
+            cars.add(addCar()); //Car added to the Set.
+            int sel = 0;
+
+            //Loop for the next action page
+            while(true){
+                Util.clearScreen();
+                System.out.println("----------------------------------------");
+                System.out.println("| There are "+cars.size()+" car(s) in the list.       |");
+                System.out.println("|                                       |");
+                System.out.println("| Please Select yout next action:       |");
+                System.out.println("| 1. Add Another Car                    |");
+                System.out.println("| 2. Finish and return to Main Menu     |");
+                System.out.println("----------------------------------------");
+                System.out.println("Please Select:");
+                try {
+                    sel = sc.nextInt();
+                    if(sel!= 1 && sel != 2){
+                        Util.invalidInput("Your selection does not match with the options!");
+                        continue;
+                    }
+                }catch (InputMismatchException e){
+                        Util.invalidInput("Your input is not a number!");
+                        continue;
+                    }
+                break;
+            }
+            if(sel == 1) {
+                continue;
+            }else{
+                break;
+            }
         }
     }
-    public static void addCar(){
+    public static Car addCar(){
         Scanner sc = new Scanner(System.in);
-        Util.clearScreen();
+
         String temp = "";
         Car car = new Car();
 
@@ -40,19 +76,19 @@ public class AddCar {
 
 
         while(true){
-            System.out.print("| Price:");
             try{
+                System.out.print("| Price:");
                 car.setPrice(String.valueOf(sc.nextDouble()));
 
             break;
             }catch (InputMismatchException e){
-                System.err.println("| Invalid Price! Try again.");
                 sc.next(); // Clear sc buffer
+                Util.wait(500);
+                System.out.println("| Invalid Price! Try again.");
+                Util.wait(700);
             }
         }
         System.out.println("----------------------------------------");
-
-        System.out.println(car);
-        sc.next();
+        return car;
     }
 }

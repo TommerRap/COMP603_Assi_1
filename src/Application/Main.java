@@ -36,7 +36,7 @@ public class Main {
             System.out.println("|                         |");
             System.out.println("|Please select:           |");
             System.out.println("|      1. View Cars       |");
-            System.out.println("|      2. Add Cars.       |");
+            System.out.println("|      2. Add Cars        |");
             System.out.println("|      3. Delete Cars     | ");
             System.out.println("---------------------------");
             System.out.print("\nPlease select the page:");
@@ -64,8 +64,7 @@ public class Main {
                     try {
                         System.out.println("1111");
                         //System.out.print("\033[H\033[2J");
-                        Util.pressToContinue();
-                        Util.clearScreen();
+                        Util.invalidInput("Your input does not match with the options!");
                     }catch (Exception e){
                         e.printStackTrace();
                     }
