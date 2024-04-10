@@ -59,7 +59,7 @@ public class AddCar {
                 Util.wait(1000);
                 System.out.println("Redirecting you to the main menu.");
                 Util.wait(3000);
-                break;
+                break ;
             }
         }
     }

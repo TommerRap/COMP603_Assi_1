@@ -37,7 +37,7 @@ public class Main {
             System.out.println("|Please select:           |");
             System.out.println("|      1. View Cars       |");
             System.out.println("|      2. Add Cars        |");
-            System.out.println("|      3. Delete Cars     | ");
+            System.out.println("|      3. Exit Program    | ");
             System.out.println("---------------------------");
             System.out.print("\nPlease select the page:");
             try {
@@ -52,18 +52,16 @@ public class Main {
 
             switch (selection){
                 case 1:
-                    System.out.println("View Cars PUC");
+                    ViewCar.ViewPage();
                     break;
                 case 2:
                     AddCar.addPage();
                     break;
                 case 3:
-                    System.out.println("Delete Cars");
+                    System.exit(0);
                     break;
                 default:
                     try {
-                        System.out.println("1111");
-                        //System.out.print("\033[H\033[2J");
                         Util.invalidInput("Your input does not match with the options!");
                     }catch (Exception e){
                         e.printStackTrace();
