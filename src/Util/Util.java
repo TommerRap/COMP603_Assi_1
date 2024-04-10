@@ -1,5 +1,6 @@
 package Util;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -18,6 +19,16 @@ public class Util {
         } catch (IOException | InterruptedException ex) {}
     }
 
+    /**
+     * An Util method to check weather the data folder for the current instance exists.
+     * If not exist, create it.
+     */
+    public static void resolveDataFolder(){
+        File dir = new File("./data");
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+    }
 
     /**
      * Pause the program and wait for the next input to continue.
@@ -64,6 +75,10 @@ public class Util {
         }
     }
 
+    /**
+     * Block the thread and wait.
+     * @param mills mills needs to wait.
+     */
     public static void wait(int mills){
         try{Thread.sleep(mills);}catch (InterruptedException e){e.printStackTrace();}
 

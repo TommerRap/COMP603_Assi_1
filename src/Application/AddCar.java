@@ -2,6 +2,7 @@ package Application;
 
 import Models.Car;
 import Util.Util;
+import Util.AddCarIOUtil;
 
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -10,10 +11,11 @@ import java.util.Set;
 
 public class AddCar {
     public static void addPage(){
+        Set<Car> cars = new HashSet();
+
         //Loop for the add car page
         while(true) {
             Scanner sc = new Scanner(System.in);
-            Set<Car> cars = new HashSet();
             Util.clearScreen();
             System.out.println("Please fill in details as instructed:");
             cars.add(addCar()); //Car added to the Set.
@@ -37,6 +39,7 @@ public class AddCar {
                         continue;
                     }
                 }catch (InputMismatchException e){
+                        sc.next();
                         Util.invalidInput("Your input is not a number!");
                         continue;
                     }
@@ -45,10 +48,26 @@ public class AddCar {
             if(sel == 1) {
                 continue;
             }else{
+                AddCarIOUtil IO = new AddCarIOUtil(cars);
+                IO.start();
+                System.out.print("Processing");
+                while (!IO.IOready){
+                    Util.wait(300);
+                    System.out.print(".");
+                }
+                System.out.println("\nSuccessful! " +cars.size() + " cars has been added.");
+                Util.wait(1000);
+                System.out.println("Redirecting you to the main menu.");
+                Util.wait(3000);
                 break;
             }
         }
     }
+
+    /**
+     * This is the procedure with CUI, to set up a new Car Object with its variables(except ID pending generated)
+     * @return Car Object with variables form user input
+     */
     public static Car addCar(){
         Scanner sc = new Scanner(System.in);
 
@@ -91,4 +110,6 @@ public class AddCar {
         System.out.println("----------------------------------------");
         return car;
     }
+
+
 }
