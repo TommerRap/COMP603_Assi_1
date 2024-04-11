@@ -14,6 +14,7 @@ public class ViewCar {
         Scanner sc = new Scanner(System.in);
         ViewCarIOUtil IO = new ViewCarIOUtil();
         ArrayList<Car> cars = IO.getAllCars();
+        ArrayList<Car> currentPageCars = new ArrayList<>();
         int totalCars = cars.size();
         int currentPage = 1;
         int totalPage = 0;
@@ -27,20 +28,28 @@ public class ViewCar {
             totalPage= totalCars/carsPerPage;
         }
         while(true) {
+            currentPageCars.clear();
             Util.clearScreen();
             System.out.println("-------------------------------------------------------------------------");
-            System.out.println(" |    Total Cars:" + totalCars);
-            System.out.println(" |    Page " + currentPage + " of " + totalPage);
+            if(!cars.isEmpty()) {
+                System.out.println(" |    Total Cars:" + totalCars);
+                System.out.println(" |    Page " + currentPage + " of " + totalPage);
+            }else{
+                System.out.println(" |    THERE IS NO CAR IN THE DATABASE!");
+            }
             System.out.println("-------------------------------------------------------------------------");
             for(int j = 0;j<carsPerPage;j++){
                 int i = (currentPage-1)*carsPerPage+j;
                 if(i<cars.size()){
+                    currentPageCars.add(cars.get(i));
                     System.out.println(" | " + (j+1)+ "  |  ID:" + cars.get(i).getID() + "  |" + cars.get(i).getYear() + " " + cars.get(i).getMake() + " " + cars.get(i).getModel() + "|" + cars.get(i).getFuel() + "|");
                     System.out.println("-------------------------------------------------------------------------");
                 }
             }
             while (true) {
+
                 System.out.println("Please choose your next action:");
+                System.out.println("a: Add new cars");
                 System.out.println("r: Return to Main Menu");
                 if (currentPage < totalPage) {
                     System.out.println("n: Next Page");
@@ -56,8 +65,24 @@ public class ViewCar {
                     continue;
                 }
                 switch (input) {
+                    case 'a':
+                        AddCar.addPage();
+                        stat='a';
+                        cars=IO.getAllCars();
+                        totalCars = cars.size();
+                        currentPage = 1;
+                        if(totalCars%carsPerPage!=0){
+                            if(totalCars/carsPerPage==0){
+                                totalPage=totalCars/carsPerPage+2;
+                            }else{
+                                totalPage=totalCars/carsPerPage+1;}
+                        }else{
+                            totalPage= totalCars/carsPerPage;
+                        }
+                        break;
                     case 'r':
                         System.out.println("r");
+                        stat='r';
                         break;
                     case 'n':
                         if (currentPage < totalPage) {
@@ -65,23 +90,47 @@ public class ViewCar {
                             stat='n';
                             break;
                         } else {
+                            stat=' ';
                             Util.invalidInput("There is no next page!");
                             continue;
                         }
                     case 'p':
-                        System.out.println("p");
-                        break;
+                        if (currentPage!=1) {
+                            currentPage--;
+                            stat='p';
+                            break;
+                        } else {
+                            stat=' ';
+                            Util.invalidInput("There is no previous page!");
+                            continue;
+                        }
+                    default:
+                        try{
+                            int index = Integer.parseInt(input+"")-1;
+                            CarDetailPage.carDetail(currentPageCars.get(index));
+                            continue;
+                        }catch (NumberFormatException e){
+                            stat=' ';
+                            Util.invalidInput("There is no such option!");
+                            continue;
+                        }catch (IndexOutOfBoundsException e){
+                            stat=' ';
+                            Util.invalidInput("There is no such car!");
+                            continue;
+                        }
+//                        stat=' ';
+//                        Util.invalidInput("There is no such option!");
+//                        continue;
                 }
                 break;
             }
-            if (stat == 'n') {
+            if (stat == 'n'||stat=='p'||stat=='a') {
                 continue;
             } else if (stat == 'r') {
                 break;
-
             }
+            break;
         }
-        Util.pressToContinue();
     }
 
 

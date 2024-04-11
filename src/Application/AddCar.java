@@ -27,9 +27,9 @@ public class AddCar {
                 System.out.println("----------------------------------------");
                 System.out.println("| There are "+cars.size()+" car(s) in the list.       |");
                 System.out.println("|                                       |");
-                System.out.println("| Please Select yout next action:       |");
+                System.out.println("| Please Select your next action:       |");
                 System.out.println("| 1. Add Another Car                    |");
-                System.out.println("| 2. Finish and return to Main Menu     |");
+                System.out.println("| 2. Finish and return to Previous      |");
                 System.out.println("----------------------------------------");
                 System.out.println("Please Select:");
                 try {
@@ -57,7 +57,7 @@ public class AddCar {
                 }
                 System.out.println("\nSuccessful! " +cars.size() + " cars has been added.");
                 Util.wait(1000);
-                System.out.println("Redirecting you to the main menu.");
+                System.out.println("Redirecting you to the previous section.");
                 Util.wait(3000);
                 break ;
             }
