@@ -4,10 +4,7 @@ import Models.Car;
 import Util.Util;
 import Util.AddCarIOUtil;
 
-import java.util.HashSet;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class AddCar {
     public static void addPage(){
@@ -25,7 +22,12 @@ public class AddCar {
             while(true){
                 Util.clearScreen();
                 System.out.println("----------------------------------------");
-                System.out.println("| There are "+cars.size()+" car(s) in the list.       |");
+                System.out.print("| There ");
+                if(cars.size()==1){
+                    System.out.print("is 1 car in the list.           |\n");
+                }else{
+                    System.out.println("are "+cars.size()+" cars in the list          |");
+                }
                 System.out.println("|                                       |");
                 System.out.println("| Please Select your next action:       |");
                 System.out.println("| 1. Add Another Car                    |");
@@ -75,30 +77,61 @@ public class AddCar {
         Car car = new Car();
 
         System.out.println("----------------------------------------");
-        System.out.print("| Make:");
 
-        car.setMake(sc.nextLine());
+        System.out.print("| Make:");
+        temp=sc.nextLine();
+        if(temp.equals("")){
+            car.setMake("Undefined");
+        }else {
+            car.setMake(temp);
+        }
+        temp="";
 
         System.out.print("| Model:");
-        car.setModel(sc.nextLine());
+        temp=sc.nextLine();
+        if(temp.equals("")){
+            car.setModel("Undefined");
+        }else {
+            car.setModel(temp);
+        }
+        temp="";
+
+
 
         System.out.print("| Year:");
-        car.setYear(sc.nextLine());
+        temp = sc.nextLine();
+        if(temp.equals("")){
+            car.setYear("Undefined");
+        }else {
+            car.setYear(temp);
+        }
+        temp="";
 
 
         System.out.print("| Licence Plate:");
-        car.setLicence(sc.nextLine());
+        temp=sc.nextLine();
+        if(temp.equals("")){
+            car.setLicence("Undefined");
+        }else {
+            car.setLicence(temp);
+        }
+        temp="";
 
 
         System.out.print("| Fuel Type:");
-        car.setFuel(sc.nextLine());
+        temp=sc.nextLine();
+        if(temp.equals("")){
+            car.setFuel("Undefined");
+        }else {
+            car.setFuel(temp);
+        }
+        temp="";
 
 
         while(true){
             try{
                 System.out.print("| Price:");
                 car.setPrice(String.valueOf(sc.nextDouble()));
-
             break;
             }catch (InputMismatchException e){
                 sc.next(); // Clear sc buffer

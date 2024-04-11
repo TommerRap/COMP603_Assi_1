@@ -21,7 +21,11 @@ public class ViewCar {
         char stat = ' ';
         if(totalCars%carsPerPage!=0){
             if(totalCars/carsPerPage==0){
-                totalPage=totalCars/carsPerPage+2;
+                if(totalCars<carsPerPage){
+                    totalPage=totalCars/carsPerPage+1;
+                }else {
+                    totalPage = totalCars / carsPerPage + 2;
+                }
             }else{
             totalPage=totalCars/carsPerPage+1;}
         }else{
@@ -42,13 +46,20 @@ public class ViewCar {
                 int i = (currentPage-1)*carsPerPage+j;
                 if(i<cars.size()){
                     currentPageCars.add(cars.get(i));
-                    System.out.println(" | " + (j+1)+ "  |  ID:" + cars.get(i).getID() + "  |" + cars.get(i).getYear() + " " + cars.get(i).getMake() + " " + cars.get(i).getModel() + "|" + cars.get(i).getFuel() + "|");
+                    System.out.println(" | No." + (j+1)+ "  |  ID:" + cars.get(i).getID() + "  |" + cars.get(i).getYear() + " " + cars.get(i).getMake() + " " + cars.get(i).getModel() + "|" + cars.get(i).getFuel() + "|");
                     System.out.println("-------------------------------------------------------------------------");
                 }
             }
-            while (true) {
 
                 System.out.println("Please choose your next action:");
+            if(cars.size()!=0) {
+                System.out.print("\nNumber 1");
+                if (currentPageCars.size() > 1) {
+                    System.out.print("-" + currentPageCars.size() + " : View Car Detail\n");
+                } else {
+                    System.out.print(" : View Car Detail\n");
+                }
+            }
                 System.out.println("a: Add new cars");
                 System.out.println("r: Return to Main Menu");
                 if (currentPage < totalPage) {
@@ -56,7 +67,7 @@ public class ViewCar {
                 }
                 if (currentPage != 1)
                     System.out.println("p: Previous Page");
-                System.out.print("Your Input:");
+                System.out.print("\nYour Input:");
                 char input = ' ';
                 try {
                     input = sc.next().charAt(0);
@@ -122,15 +133,14 @@ public class ViewCar {
 //                        Util.invalidInput("There is no such option!");
 //                        continue;
                 }
-                break;
-            }
             if (stat == 'n'||stat=='p'||stat=='a') {
                 continue;
             } else if (stat == 'r') {
                 break;
             }
-            break;
-        }
+            }
+
+
     }
 
 
