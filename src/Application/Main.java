@@ -1,8 +1,13 @@
 package Application;
 
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import Util.Util;
+import Models.Car;
+import javax.swing.text.View;
+
+
 
 public class Main {
     public static void main(String[] args) {
@@ -29,6 +34,7 @@ public class Main {
         while(true){
             Util.clearScreen();
             Scanner sc = new Scanner(System.in);
+
             System.out.println("---------------------------");
             System.out.println("|  WELCOME TO CarTraders! |");
             System.out.println("|        Haere Mai!       |");
@@ -47,27 +53,40 @@ public class Main {
                 Util.invalidInput("Your input is not a number!");
                 continue;
             }
-
-
-
-            switch (selection){
-                case 1:
-                    ViewCar.ViewPage();
-                    break;
-                case 2:
-                    AddCar.addPage();
-                    break;
-                case 3:
-                    System.exit(0);
-                    break;
-                default:
-                    try {
-                        Util.invalidInput("Your input does not match with the options!");
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                switch (selection){
+                    case 1:
+                        while(true) {
+                            System.out.println("How many cars would you like to display in one page (maximum 10)?");
+                            try {
+                                System.out.print("Your Input:");
+                                int temp = sc.nextInt();
+                                if(temp>0 && temp <= 10) {
+                                    ViewCar.viewCars(temp);
+                                    break;
+                                }else{
+                                    Util.invalidInput("Please input a number between 1-10!");
+                                }
+                            } catch (InputMismatchException e) {
+                                Util.clearScreen();
+                                sc.next();
+                                Util.invalidInput("Your input is not a number!");
+                            }
+                        }
+                        break;
+                    case 2:
+                        AddCar.addPage();
+                        break;
+                    case 3:
+                        System.exit(0);
+                        break;
+                    default:
+                        try {
+                            Util.invalidInput("Your input does not match with the options!");
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                }
             }
         }
     }
 
-}
