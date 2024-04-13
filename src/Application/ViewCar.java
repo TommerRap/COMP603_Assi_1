@@ -1,36 +1,20 @@
 package Application;
 import Models.Car;
 import Util.Util;
-import Util.ViewCarIOUtil;
+import Util.CarIOUtil;
 
-import javax.crypto.spec.PSource;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
 
 public class ViewCar {
     public static void viewCars(int carsPerPage) {
         Scanner sc = new Scanner(System.in);
-        ViewCarIOUtil IO = new ViewCarIOUtil();
+        CarIOUtil IO = new CarIOUtil();
         ArrayList<Car> cars = IO.getAllCars();
         ArrayList<Car> currentPageCars = new ArrayList<>();
         int totalCars = cars.size();
         int currentPage = 1;
-        int totalPage = 0;
         char stat = ' ';
-        if(totalCars%carsPerPage!=0){
-            if(totalCars/carsPerPage==0){
-                if(totalCars<carsPerPage){
-                    totalPage=totalCars/carsPerPage+1;
-                }else {
-                    totalPage = totalCars / carsPerPage + 2;
-                }
-            }else{
-            totalPage=totalCars/carsPerPage+1;}
-        }else{
-            totalPage= totalCars/carsPerPage;
-        }
+        int totalPage = getTotalPage(carsPerPage, totalCars);
         while(true) {
             currentPageCars.clear();
             Util.clearScreen();
@@ -82,14 +66,7 @@ public class ViewCar {
                         cars=IO.getAllCars();
                         totalCars = cars.size();
                         currentPage = 1;
-                        if(totalCars%carsPerPage!=0){
-                            if(totalCars/carsPerPage==0){
-                                totalPage=totalCars/carsPerPage+2;
-                            }else{
-                                totalPage=totalCars/carsPerPage+1;}
-                        }else{
-                            totalPage= totalCars/carsPerPage;
-                        }
+                        totalPage = getTotalPage(carsPerPage, totalCars);
                         break;
                     case 'r':
                         System.out.println("r");
@@ -141,6 +118,23 @@ public class ViewCar {
             }
 
 
+    }
+
+    private static int getTotalPage(int carsPerPage, int totalCars) {
+        int totalPage;
+        if(totalCars%carsPerPage!=0){
+            if(totalCars/carsPerPage==0){
+                if(totalCars<carsPerPage){
+                    totalPage=totalCars/carsPerPage+1;
+                }else {
+                    totalPage = totalCars / carsPerPage + 2;
+                }
+            }else{
+                totalPage=totalCars/carsPerPage+1;}
+        }else{
+            totalPage= totalCars/carsPerPage;
+        }
+        return totalPage;
     }
 
 

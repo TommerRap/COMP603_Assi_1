@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ViewCarIOUtil{
+public class CarIOUtil {
     public  ArrayList<Car> getAllCars(){
         ArrayList<Car> cars = new ArrayList<>();
         int id = 10001;
