@@ -43,7 +43,7 @@ public class Main {
             System.out.println("|Please select:           |");
             System.out.println("|      1. View Cars       |");
             System.out.println("|      2. Add Cars        |");
-            System.out.println("|      3. Exit Program    | ");
+            System.out.println("|      4. Exit Program    | ");
             System.out.println("---------------------------");
             System.out.print("\nPlease select the page:");
             try {
@@ -77,6 +77,8 @@ public class Main {
                         AddCar.addPage();
                         break;
                     case 3:
+
+                    case 4:
                         System.exit(0);
                         break;
                     default:

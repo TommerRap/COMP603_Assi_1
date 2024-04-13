@@ -17,6 +17,7 @@ public class Car {
         var.put("Licence","Undefined");
         var.put("Fuel","Undefined");
         var.put("Price","Undefined");
+        var.put("Available","true");
     }
 
 

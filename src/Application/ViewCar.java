@@ -96,6 +96,10 @@ public class ViewCar {
                         try{
                             int index = Integer.parseInt(input+"")-1;
                             CarDetailPage.carDetail(currentPageCars.get(index));
+                            cars=IO.getAllCars();
+                            totalCars = cars.size();
+                            currentPage = 1;
+                            totalPage = getTotalPage(carsPerPage, totalCars);
                             continue;
                         }catch (NumberFormatException e){
                             stat=' ';

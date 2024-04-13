@@ -2,10 +2,7 @@ package Util;
 
 import Models.Car;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class CarIOUtil {
@@ -23,7 +20,9 @@ public class CarIOUtil {
                 car.setLicence(read.readLine().split(":")[1]);
                 car.setFuel(read.readLine().split(":")[1]);
                 car.setPrice(read.readLine().split(":")[1]);
-                cars.add(car);
+                if(read.readLine().split(":")[1].equals("true")){
+                    cars.add(car);
+                }
                 id++;
             }catch (FileNotFoundException e){
                 break;
@@ -32,5 +31,23 @@ public class CarIOUtil {
             }
         }
         return cars;
+    }
+
+    public void deleteCar(Car car){
+        try {
+
+            BufferedWriter write = new BufferedWriter(new FileWriter("./data/"+car.getID()+".txt"));
+            write.write("ID:"+car.getID());
+            write.write("\nMake:"+car.getMake());
+            write.write("\nModel:"+car.getModel());
+            write.write("\nYear:"+car.getYear());
+            write.write("\nLicence Plate:"+car.getLicence());
+            write.write("\nFuel Type:"+car.getFuel());
+            write.write("\nPrice:"+car.getPrice());
+            write.write("\nAvailable:false");
+            write.close();
+        }catch (IOException e){
+
+        }
     }
 }

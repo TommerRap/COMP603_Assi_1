@@ -28,6 +28,7 @@ public class AddCarIOUtil extends Thread{
                 write.write("\nLicence Plate:"+car.getLicence());
                 write.write("\nFuel Type:"+car.getFuel());
                 write.write("\nPrice:"+car.getPrice());
+                write.write("\nAvailable:true");
                 write.close();
                 this.IOready=true;
             }catch (IOException e){
