@@ -12,6 +12,7 @@ import javax.swing.text.View;
 public class Main {
     public static void main(String[] args) {
         int selection = 0;
+        Util.clearScreen();
         System.out.println("-------------------------------------------------------------------------");
         System.out.println("| Dear Instructor:                                                      |");
         System.out.println("|      Thanks for reviewing our project.As there are indeed limitations |");
@@ -36,7 +37,7 @@ public class Main {
             Scanner sc = new Scanner(System.in);
 
             System.out.println("---------------------------");
-            System.out.println("|  WELCOME TO CarTraders! |");
+            System.out.println("|  WELCOME TO CarManager! |");
             System.out.println("|        Haere Mai!       |");
             System.out.println("|        ----------       |");
             System.out.println("|                         |");
@@ -58,6 +59,7 @@ public class Main {
                         while(true) {
                             System.out.println("How many cars would you like to display in one page (maximum 10)?");
                             try {
+                                //Start ViewCar Page
                                 System.out.print("Your Input:");
                                 int temp = sc.nextInt();
                                 if(temp>0 && temp <= 10) {
@@ -74,6 +76,7 @@ public class Main {
                         }
                         break;
                     case 2:
+                        //Start AddCar Page
                         AddCar.addPage();
                         break;
                     case 3:

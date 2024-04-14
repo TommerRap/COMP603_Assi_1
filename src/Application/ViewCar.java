@@ -8,27 +8,31 @@ import java.util.*;
 public class ViewCar {
     public static void viewCars(int carsPerPage) {
         Scanner sc = new Scanner(System.in);
-        CarIOUtil IO = new CarIOUtil();
-        ArrayList<Car> cars = IO.getAllCars();
-        ArrayList<Car> currentPageCars = new ArrayList<>();
+        CarIOUtil IO = new CarIOUtil(); //init IO Util
+        ArrayList<Car> cars = IO.getAllCars(); //store all Cars in ArrayList<> cars
+        ArrayList<Car> currentPageCars = new ArrayList<>(); //register a new arrayList for current page cats.
         int totalCars = cars.size();
         int currentPage = 1;
-        char stat = ' ';
-        int totalPage = getTotalPage(carsPerPage, totalCars);
+        char stat = ' ';//init input status
+        int totalPage = getTotalPage(carsPerPage, totalCars); //get total page
         while(true) {
-            currentPageCars.clear();
+            currentPageCars.clear(); //reassign currentPage cars
             Util.clearScreen();
             System.out.println("-------------------------------------------------------------------------");
-            if(!cars.isEmpty()) {
+            if(!cars.isEmpty()) {//output if there are cars
                 System.out.println(" |    Total Cars:" + totalCars);
                 System.out.println(" |    Page " + currentPage + " of " + totalPage);
-            }else{
+            }else{//output if there is no car.
                 System.out.println(" |    THERE IS NO CAR IN THE DATABASE!");
             }
             System.out.println("-------------------------------------------------------------------------");
             for(int j = 0;j<carsPerPage;j++){
-                int i = (currentPage-1)*carsPerPage+j;
-                if(i<cars.size()){
+                //j is the index for the current page.
+
+                //i is the index for the overall car ArrayList.
+                int i = (currentPage-1)*carsPerPage+j;//calculate the corresponding index for the overall cars ArrayList accroding to j value.
+
+                if(i<cars.size()){//iterate all cars
                     currentPageCars.add(cars.get(i));
                     System.out.println(" | No." + (j+1)+ "  |  ID:" + cars.get(i).getID() + "  |" + cars.get(i).getYear() + " " + cars.get(i).getMake() + " " + cars.get(i).getModel() + "|" + cars.get(i).getFuel() + "|");
                     System.out.println("-------------------------------------------------------------------------");
@@ -94,25 +98,23 @@ public class ViewCar {
                         }
                     default:
                         try{
-                            int index = Integer.parseInt(input+"")-1;
+                            int index = Integer.parseInt(input+"")-1; //try to access currentPageCars.get(input)
                             CarDetailPage.carDetail(currentPageCars.get(index));
                             cars=IO.getAllCars();
                             totalCars = cars.size();
                             currentPage = 1;
                             totalPage = getTotalPage(carsPerPage, totalCars);
                             continue;
-                        }catch (NumberFormatException e){
+                        }catch (NumberFormatException e){ //catch numberformat means not a number
                             stat=' ';
                             Util.invalidInput("There is no such option!");
                             continue;
-                        }catch (IndexOutOfBoundsException e){
+                        }catch (IndexOutOfBoundsException e){ //OutofBound means number more than available cars.
                             stat=' ';
                             Util.invalidInput("There is no such car!");
                             continue;
                         }
-//                        stat=' ';
-//                        Util.invalidInput("There is no such option!");
-//                        continue;
+//
                 }
             if (stat == 'n'||stat=='p'||stat=='a') {
                 continue;
@@ -124,10 +126,14 @@ public class ViewCar {
 
     }
 
+
     private static int getTotalPage(int carsPerPage, int totalCars) {
         int totalPage;
         if(totalCars%carsPerPage!=0){
+            //comes with potential that int cancels the decimal value for thr result of totalCars/carsPerPage
             if(totalCars/carsPerPage==0){
+
+                //if total car value is lesser than the single page car value
                 if(totalCars<carsPerPage){
                     totalPage=totalCars/carsPerPage+1;
                 }else {
@@ -136,10 +142,9 @@ public class ViewCar {
             }else{
                 totalPage=totalCars/carsPerPage+1;}
         }else{
+            //if totalCars%carsPerPage==0, then result equals to totalPage.
             totalPage= totalCars/carsPerPage;
         }
         return totalPage;
     }
-
-
 }
