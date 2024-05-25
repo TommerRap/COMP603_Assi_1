@@ -12,12 +12,12 @@ public class Car {
     public Car(){
         var.put("ID","Undefined");
         var.put("Make","Undefined");
-        var.put("Model","Undefined");
-        var.put("Year","Undefined");
-        var.put("Licence","Undefined");
-        var.put("Fuel","Undefined");
-        var.put("Price","Undefined");
-        var.put("Available","true");
+        var.put("Model", "Undefined");
+        var.put("Year", "Undefined");
+        var.put("Licence", "Undefined");
+        var.put("Fuel", "Undefined");
+        var.put("Price", "Undefined");
+        var.put("Available", "true");
     }
 
 

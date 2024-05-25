@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AddCarIOUtil extends Thread{
+
     Set<Car> cars;
     public boolean IOready = false;
 
@@ -30,11 +31,11 @@ public class AddCarIOUtil extends Thread{
                 write.write("\nPrice:"+car.getPrice());
                 write.write("\nAvailable:true");
                 write.close();
-                this.IOready=true;
             }catch (IOException e){
                 e.printStackTrace();
             }
         }
+        this.IOready=true;
     }
 
     private String generateId() throws IOException {

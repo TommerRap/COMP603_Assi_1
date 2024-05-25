@@ -7,6 +7,7 @@ import Util.AddCarIOUtil;
 import java.util.*;
 
 public class AddCar {
+
     public static void addPage(){
         Set<Car> cars = new HashSet();
 
@@ -17,7 +18,6 @@ public class AddCar {
             System.out.println("Please fill in details as instructed:");
             cars.add(addCar()); //Car added to the Set.
             int sel = 0;
-
             //Loop for the next action page
             while(true){
                 Util.clearScreen();
@@ -132,7 +132,7 @@ public class AddCar {
             try{
                 System.out.print("| Price:");
                 car.setPrice(String.valueOf(sc.nextDouble()));
-            break;
+                break;
             }catch (InputMismatchException e){
                 sc.next(); // Clear sc buffer
                 Util.wait(500);
