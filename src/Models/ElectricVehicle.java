@@ -10,9 +10,9 @@ package Models;
  */
 public class ElectricVehicle extends Vehicle {
     
-    private int endurance;   
-    private boolean superCharge;
-    private int superChargeRate;
+    private int endurance;   //the electric car's endurance
+    private boolean superCharge;//does electric car able to supercharge
+    private int superChargeRate;//electric car's superchargerate
    
     
     public ElectricVehicle(int endurance, boolean superCharge, int superChargeRate, int id, String make, String model, int year, String licence, double price, boolean isSold )
@@ -52,5 +52,5 @@ public class ElectricVehicle extends Vehicle {
     {
         this.superChargeRate=superChargeRate;
     }
-    
+   
 }
