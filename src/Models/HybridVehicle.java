@@ -10,4 +10,5 @@ package Models;
  */
 public class HybridVehicle {
     
+    
 }
