@@ -9,10 +9,10 @@ package Models;
  * @author Qijia Yuan 22176238
  */
 public class HybridVehicle extends Vehicle{
-    private boolean fuelOnlyEndurance;//does this hybridcar support fuelonly endurance
+    private int fuelOnlyEndurance;//does this hybridcar support fuelonly endurance
     private boolean plugIn;//does this hybrid car support both fuel and elecrtric endurance
     
-     public HybridVehicle(boolean fuelOnlyEndurance, boolean plugIn, int id, String make, String model, int year, String licence, double price, boolean isSold )
+     public HybridVehicle(int fuelOnlyEndurance, boolean plugIn, int id, String make, String model, int year, String licence, double price, boolean isSold )
     {
         super(id, make, model, year, licence, price, isSold);
         this.fuelOnlyEndurance=fuelOnlyEndurance;
@@ -27,7 +27,7 @@ public class HybridVehicle extends Vehicle{
          return plugIn;
      }
     
-     public boolean isFuelOnlyEndurance()
+     public int getFuelOnlyEndurance()
      {
          return fuelOnlyEndurance;
      }
@@ -36,7 +36,7 @@ public class HybridVehicle extends Vehicle{
      {
          this.plugIn=plugIn;
      }
-     public void setFuelOnlyEndurance()
+     public void setFuelOnlyEndurance(int fuelOnlyEndurance)
      {
          this.fuelOnlyEndurance=fuelOnlyEndurance;
      }
