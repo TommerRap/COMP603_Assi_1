@@ -19,6 +19,16 @@ abstract class Vehicle {
     private boolean isSold;
     
     
+    public Vehicle(int id, String make, String model, int year, String licence, double price, boolean isSold) {
+        this.id = id;
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        this.licence = licence;
+        this.price = price;
+        this.isSold = isSold;
+    }
+    
     public static Vehicle getVehicleObject(String carType){
         return null;
     }
