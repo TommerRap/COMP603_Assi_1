@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/DAL/VehicleDAL.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/Util/Util.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/DAL/DatabaseHelper.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/test/DBTest.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/View/MainPageGUI.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/Application/Main.java</file>
+        </group>
     </open-files>
 </project-private>

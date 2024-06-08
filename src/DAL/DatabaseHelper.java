@@ -6,7 +6,9 @@ package DAL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -43,5 +45,24 @@ public class DatabaseHelper {
         System.out.println(url+"connected.");
     }
    
+    /**
+     * get the total data count for a database table
+     * @param table which table is in query
+     * @return data count
+     */
+    public static int getDataCount(String queryTable){
+        try{
+            DatabaseHelper DbHelper  = new DatabaseHelper();
+            Statement statement = DbHelper.getConnection().createStatement();
+            String query = "select count(*) from "+queryTable;
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+            return rs.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
 }
 

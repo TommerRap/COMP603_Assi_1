@@ -1,5 +1,6 @@
 package Application;
 
+import View.DetailPageGUI;
 import View.MainPageGUI;
 
 
@@ -8,7 +9,8 @@ import View.MainPageGUI;
 
 public class Main {
     public static void main(String[] args) {
-        MainPageGUI main = new MainPageGUI();
+        new MainPageGUI();
+        //DetailPageGUI detail = new DetailPageGUI(10001);
     }
 }
 

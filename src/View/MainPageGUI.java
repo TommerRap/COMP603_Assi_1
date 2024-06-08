@@ -4,11 +4,19 @@
  */
 package View;
 
+import DAL.DatabaseHelper;
+import DAL.VehicleDAL;
+import Models.Car;
+import Models.Vehicle;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.util.Random;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +25,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author tomme
+ * @author Tommer & Jason
  */
 public class MainPageGUI {
     
@@ -81,8 +89,120 @@ public class MainPageGUI {
          */
         
          
-         frame.setVisible(true);
+         /**
+          * FEATURED SECTION BEGINS
+          */
+         
+         //Featured Label
+         JLabel featuredLabel = new JLabel("Featured");
+         featuredLabel.setFont(new Font("Serif",Font.PLAIN,36));
+         featuredLabel.setBounds(50,300,150,30);
+         //featuredLabel.setText(DatabaseHelper.getDataCount("VEHICLES")+"");
+         panel.add(featuredLabel);
+          
+         Random r = new Random();
+         
+         //Car PlaceHolder 1
+         int id1 =10000 + r.nextInt(DatabaseHelper.getDataCount("VEHICLES"))+1;
+         Vehicle car1 = VehicleDAL.getCar(id1);
+         
+         ImageIcon image1 = new ImageIcon();
+         try{
+         image1 = new ImageIcon(ImageIO.read(new File("./"+car1.getType()+".jpg")).getScaledInstance(300,300,10));
+         }catch(Exception e){e.printStackTrace();}
+         
+         JLabel image1DisplayField = new JLabel(image1);
+         JLabel car1Info = new JLabel(car1.getYear()+" "+ car1.getMake()+" "+car1.getModel());
+         JLabel car1Type = new JLabel(car1.getType());
+         JLabel car1Price = new JLabel("$"+car1.getPrice());
+         JButton car1Page = new JButton("View More");
+         
+         image1DisplayField.setBounds(50,350,300,300);
+         car1Info.setBounds(50,650,300,30);
+         car1Type.setBounds(50,670,100,30);
+         car1Price.setBounds(50,690,100,30);
+         car1Page.setBounds(250,660,100,50);
+         panel.add(image1DisplayField);
+         panel.add(car1Info);
+         panel.add(car1Type);
+         panel.add(car1Price);
+         panel.add(car1Page);
+         
+         
+        int dataCount = DatabaseHelper.getDataCount("VEHICLES");
 
+         //Car PlaceHolder 2
+        
+         
+         int id2 =10000 + r.nextInt(dataCount)+1;
+         while(true){
+             if(id2==id1){
+                 id2 = 10000+r.nextInt(dataCount)+1; //if got the same ID number, generate a new one
+             }else{
+                 break;
+             }
+         }
+         
+          Vehicle car2 = VehicleDAL.getCar(id2);
+         ImageIcon image2 = new ImageIcon();
+         try{
+         image2 = new ImageIcon(ImageIO.read(new File("./"+car2.getType()+".jpg")).getScaledInstance(300,300,10));
+         }catch(Exception e){e.printStackTrace();}
+         
+         JLabel image2DisplayField = new JLabel(image2);
+         JLabel car2Info = new JLabel(car2.getYear()+" "+ car2.getMake()+" "+car2.getModel());
+         JLabel car2Type = new JLabel(car2.getType());
+         JLabel car2Price = new JLabel("$"+car2.getPrice());
+         JButton car2Page = new JButton("View More");
+         
+         image2DisplayField.setBounds(450,350,300,300);
+         car2Info.setBounds(450,650,300,30);
+         car2Type.setBounds(450,670,100,30);
+         car2Price.setBounds(450,690,100,30);
+         car2Page.setBounds(650,660,100,50);
+         panel.add(image2DisplayField);
+         panel.add(car2Info);
+         panel.add(car2Type);
+         panel.add(car2Price);
+         panel.add(car2Page);
+         
+        
+         //Car PlaceHolder 3
+         int id3 =10000 + r.nextInt(dataCount)+1;
+         while(true){
+             if(id3==id2){
+                 id3 = 10000+r.nextInt(dataCount)+1; //if got the same ID number, generate a new one
+             }else{
+                 break;
+             }
+         }
+          Vehicle car3 = VehicleDAL.getCar(id3);
+         
+         ImageIcon image3 = new ImageIcon();
+         try{
+         image3 = new ImageIcon(ImageIO.read(new File("./"+car3.getType()+".jpg")).getScaledInstance(300,300,10));
+         }catch(Exception e){e.printStackTrace();}
+         
+         JLabel image3DisplayField = new JLabel(image3);
+         JLabel car3Info = new JLabel(car3.getYear()+" "+ car3.getMake()+" "+car3.getModel());
+         JLabel car3Type = new JLabel(car3.getType());
+         JLabel car3Price = new JLabel("$"+car3.getPrice());
+         JButton car3Page = new JButton("View More");
+         
+         image3DisplayField.setBounds(850,350,300,300);
+         car3Info.setBounds(850,650,300,30);
+         car3Type.setBounds(850,670,100,30);
+         car3Price.setBounds(850,690,100,30);
+         car3Page.setBounds(1050,660,100,50);
+         panel.add(image3DisplayField);
+         panel.add(car3Info);
+         panel.add(car3Type);
+         panel.add(car3Price);
+         panel.add(car3Page);
+         
+         
+         frame.setVisible(true);
+         new DetailPageGUI(10001);
     }
-    
+   
 }
