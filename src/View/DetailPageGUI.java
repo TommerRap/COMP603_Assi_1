@@ -88,7 +88,7 @@ public class DetailPageGUI {
             evEndurance.setFont(new Font("Serif",Font.PLAIN,22));
             JLabel evIsSupportSuperCharge = new JLabel("Super Charge Support: " + ev.isSuperCharge());
             evIsSupportSuperCharge.setFont(new Font("Serif",Font.PLAIN,22));
-            JLabel evSuperChargeRate = new JLabel("Super Charge Rate: " + ev.getSuperChargeRate());
+            JLabel evSuperChargeRate = new JLabel("Super Charge Rate: " + ev.getSuperChargeRate()+"kW");
             evSuperChargeRate.setFont(new Font("Serif",Font.PLAIN,22));
 
             evEndurance.setBounds(700,150,400,50);

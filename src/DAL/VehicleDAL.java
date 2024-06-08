@@ -4,7 +4,6 @@
  */
 package DAL;
 
-import Models.Car;
 import Models.ElectricVehicle;
 import Models.FuelCar;
 import Models.HybridVehicle;
@@ -19,6 +18,50 @@ import java.sql.Statement;
  */
 public class VehicleDAL {
     //public ResultSet
+    
+    public ResultSet searchForCar(String input){
+        try{
+                DatabaseHelper db = new DatabaseHelper();
+                Statement statement = db.getConnection().createStatement();
+                String query = "SELECT * FROM VEHICLES WHERE RTRIM(CHAR(VEHICLE_ID)) LIKE '%"+input+"%' OR VEHICLE_MAKE LIKE '%"+input+"%' OR VEHICLE_MODEL LIKE '%"+input+"%' OR RTRIM(CHAR(VEHICLE_YEAR)) LIKE '%"+input+"%'";
+                return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+                return null;
+    }
+    
+    public ResultSet getAllCars(){
+        try{
+         DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "select * from VEHICLES";
+        return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+        return null;
+    }
+    
+    public ResultSet getAllEVs(){
+         try{
+         DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "SELECT * FROM VEHICLES WHERE VEHICLE_ID IN (SELECT EV_ID FROM EV)";
+        return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+        return null;
+    }
+    
+    public ResultSet getAllHybrid(){
+         try{
+         DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "SELECT * FROM VEHICLES WHERE VEHICLE_ID IN (SELECT HYBRID_VEHICLE_ID FROM HYBRIDVEHICLE)";
+        return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+        return null;
+    }
+    public ResultSet getAllFuel(){
+         try{
+         DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "SELECT * FROM VEHICLES WHERE VEHICLE_ID IN (SELECT FUEL_ID FROM FUELVEHICLE)";
+        return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+        return null;
+    }
     
     public static Vehicle getCar (int id){
         try{

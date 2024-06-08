@@ -40,6 +40,10 @@ public class Util {
             throw new RuntimeException(e);
         }
     }
+    
+    public static int[] pageHelper(int total){
+        return new int[1];
+    }
 
 
 

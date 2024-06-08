@@ -4,6 +4,7 @@
  */
 package View;
 
+import Control.CarsControl;
 import DAL.DatabaseHelper;
 import DAL.VehicleDAL;
 import Models.Car;
@@ -15,7 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -36,6 +41,7 @@ public class MainPageGUI implements ActionListener {
     Vehicle car1;
     Vehicle car2;
     Vehicle car3;
+    int dataCount = DatabaseHelper.getDataCount("VEHICLES");
     public MainPageGUI(){
         //Setup JFrame
         JFrame frame = new JFrame();
@@ -62,7 +68,23 @@ public class MainPageGUI implements ActionListener {
          //Search Button
          JButton searchButton = new JButton("Search");
          searchButton.setBounds(760, 120, 80, 30);
+         searchButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                try {
+                    ArrayList<Vehicle> result = control.searchForCar(searchBar.getText());
+                    if(result!=null && result.size()!=0){
+                        new CarListGUI(result);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainPageGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+   });
          panel.add(searchButton);
+         
+         System.out.println(searchBar.getText());
       
          
          
@@ -73,23 +95,53 @@ public class MainPageGUI implements ActionListener {
          //Fuel Button
          JButton fuelButton = new JButton("Fuel");
          fuelButton.setBounds(400,160,80,30);
+         fuelButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                try{new CarListGUI(control.getAllFuel());}catch(SQLException ex){ex.printStackTrace();}
+            }
+        });
          panel.add(fuelButton);
          
          //Hybrid Button
          JButton hybridButton = new JButton("Hybrid");
          hybridButton.setBounds(500,160,80,30);
+         hybridButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                try{new CarListGUI(control.getAllHybrid());}catch(SQLException ex){ex.printStackTrace();}
+            }
+        });
          panel.add(hybridButton);
+         
          
          //EV Button
          JButton EVButton = new JButton("EV");
          EVButton.setBounds(600,160,80,30);
+         EVButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                try{new CarListGUI(control.getAllEV());}catch(SQLException ex){ex.printStackTrace();}
+            }
+        });
          panel.add(EVButton);
          
          
          //All Button
          JButton AllButton = new JButton("See All");
          AllButton.setBounds(700,160,80,30);
+         AllButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                try{new CarListGUI(control.getAllCars());}catch(SQLException ex){ex.printStackTrace();}
+            }
+        });
          panel.add(AllButton);
+         
          
          /**
          * Category Button Set Ends
@@ -110,7 +162,7 @@ public class MainPageGUI implements ActionListener {
          Random r = new Random();
          
          //Car PlaceHolder 1
-         int id1 =10000 + r.nextInt(DatabaseHelper.getDataCount("VEHICLES"))+1;
+         int id1 =10000 + r.nextInt(this.dataCount)+1;
          car1 = VehicleDAL.getCar(id1);
          
          ImageIcon image1 = new ImageIcon();
@@ -137,7 +189,7 @@ public class MainPageGUI implements ActionListener {
          panel.add(car1Page);
          
          
-        int dataCount = DatabaseHelper.getDataCount("VEHICLES");
+       
 
          //Car PlaceHolder 2
         
