@@ -10,6 +10,8 @@ import Models.Car;
 import Models.Vehicle;
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
@@ -27,8 +29,13 @@ import javax.swing.JTextField;
  *
  * @author Tommer & Jason
  */
-public class MainPageGUI {
-    
+public class MainPageGUI implements ActionListener {
+    JButton car1Page;
+    JButton car2Page;
+    JButton car3Page;
+    Vehicle car1;
+    Vehicle car2;
+    Vehicle car3;
     public MainPageGUI(){
         //Setup JFrame
         JFrame frame = new JFrame();
@@ -104,7 +111,7 @@ public class MainPageGUI {
          
          //Car PlaceHolder 1
          int id1 =10000 + r.nextInt(DatabaseHelper.getDataCount("VEHICLES"))+1;
-         Vehicle car1 = VehicleDAL.getCar(id1);
+         car1 = VehicleDAL.getCar(id1);
          
          ImageIcon image1 = new ImageIcon();
          try{
@@ -115,7 +122,8 @@ public class MainPageGUI {
          JLabel car1Info = new JLabel(car1.getYear()+" "+ car1.getMake()+" "+car1.getModel());
          JLabel car1Type = new JLabel(car1.getType());
          JLabel car1Price = new JLabel("$"+car1.getPrice());
-         JButton car1Page = new JButton("View More");
+         car1Page = new JButton("View More");
+         car1Page.addActionListener(this);
          
          image1DisplayField.setBounds(50,350,300,300);
          car1Info.setBounds(50,650,300,30);
@@ -143,7 +151,7 @@ public class MainPageGUI {
              }
          }
          
-          Vehicle car2 = VehicleDAL.getCar(id2);
+          car2 = VehicleDAL.getCar(id2);
          ImageIcon image2 = new ImageIcon();
          try{
          image2 = new ImageIcon(ImageIO.read(new File("./"+car2.getType()+".jpg")).getScaledInstance(300,300,10));
@@ -153,7 +161,8 @@ public class MainPageGUI {
          JLabel car2Info = new JLabel(car2.getYear()+" "+ car2.getMake()+" "+car2.getModel());
          JLabel car2Type = new JLabel(car2.getType());
          JLabel car2Price = new JLabel("$"+car2.getPrice());
-         JButton car2Page = new JButton("View More");
+         car2Page = new JButton("View More");
+         car2Page.addActionListener(this);
          
          image2DisplayField.setBounds(450,350,300,300);
          car2Info.setBounds(450,650,300,30);
@@ -170,13 +179,13 @@ public class MainPageGUI {
          //Car PlaceHolder 3
          int id3 =10000 + r.nextInt(dataCount)+1;
          while(true){
-             if(id3==id2){
+             if(id3==id2||id3==id1){
                  id3 = 10000+r.nextInt(dataCount)+1; //if got the same ID number, generate a new one
              }else{
                  break;
              }
          }
-          Vehicle car3 = VehicleDAL.getCar(id3);
+          car3 = VehicleDAL.getCar(id3);
          
          ImageIcon image3 = new ImageIcon();
          try{
@@ -187,7 +196,8 @@ public class MainPageGUI {
          JLabel car3Info = new JLabel(car3.getYear()+" "+ car3.getMake()+" "+car3.getModel());
          JLabel car3Type = new JLabel(car3.getType());
          JLabel car3Price = new JLabel("$"+car3.getPrice());
-         JButton car3Page = new JButton("View More");
+         car3Page = new JButton("View More");
+         car3Page.addActionListener(this);
          
          image3DisplayField.setBounds(850,350,300,300);
          car3Info.setBounds(850,650,300,30);
@@ -202,7 +212,19 @@ public class MainPageGUI {
          
          
          frame.setVisible(true);
-         new DetailPageGUI(10001);
+        // new DetailPageGUI(car1);
+        new DetailPageGUI(VehicleDAL.getCar(10001));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==car1Page){
+            new DetailPageGUI(car1);
+        }else if(e.getSource()==car2Page){
+            new DetailPageGUI(car2);
+        }else if(e.getSource() == car3Page){
+            new DetailPageGUI(car3);
+        }
     }
    
 }

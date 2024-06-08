@@ -9,12 +9,12 @@ package Models;
  * @author tomme
  */
 public class FuelCar extends Vehicle{
-    private int averageFuelConsumption;
+    private float averageFuelConsumption;
     
     
-    public FuelCar(int averageFuelConsumption, int id, String make, String model, int year, String licence, double price, boolean isSold )
+    public FuelCar(float averageFuelConsumption, int id, String make, String model, int year, float price, boolean isAvailable )
     {
-        super(id, make, model, year, licence, price, isSold);
+        super(id, make, model,"Fuel",year, price, isAvailable);
          this.averageFuelConsumption=averageFuelConsumption;
     }
     
@@ -23,7 +23,7 @@ public class FuelCar extends Vehicle{
     {
         this.averageFuelConsumption=averageFuelConsumption;
     }
-    public int getAverageFuelConsumption()
+    public float getAverageFuelConsumption()
     {
         return averageFuelConsumption;
     }

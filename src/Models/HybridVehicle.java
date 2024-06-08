@@ -12,15 +12,15 @@ public class HybridVehicle extends Vehicle{
     private int fuelOnlyEndurance;//does this hybridcar support fuelonly endurance
     private boolean plugIn;//does this hybrid car support both fuel and elecrtric endurance
     
-     public HybridVehicle(int fuelOnlyEndurance, boolean plugIn, int id, String make, String model, int year, String licence, double price, boolean isSold )
+     public HybridVehicle(int fuelOnlyEndurance, boolean plugIn, int id, String make, String model, int year, float price, boolean isAvailable )
     {
-        super(id, make, model, year, licence, price, isSold);
+        super(id, make, model, "Hybrid",year,price, isAvailable);
         this.fuelOnlyEndurance=fuelOnlyEndurance;
         this.plugIn=plugIn;
     }
     
      
-     
+  
      
      public boolean isPlugIn()
      {

@@ -15,7 +15,7 @@ public class Vehicle {
     private String model;
     private int year;
     private float price;
-    private boolean isSold; 
+    private boolean isAvailable; 
     private String carType;
 
     public int getId() {
@@ -38,8 +38,8 @@ public class Vehicle {
         return price;
     }
 
-    public boolean isSold() {
-        return isSold;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
     public void setId(int id) {
@@ -62,8 +62,8 @@ public class Vehicle {
         this.price = price;
     }
 
-    public void setIsSold(boolean isSold) {
-        this.isSold = isSold;
+    public void setAvailability(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
     
     public void setType(String type){
@@ -75,14 +75,18 @@ public class Vehicle {
     }
     
     
-    public Vehicle(int id, String make, String model, String type, int year, float price, boolean isSold) {
+    public Vehicle(int id, String make, String model, String type, int year, float price, boolean isAvailable) {
         this.id = id;
         this.make = make;
         this.model = model;
         this.year = year;
         this.price = price;
-        this.isSold = isSold;
+        this.isAvailable = isAvailable;
         this.carType = type;
     }
-
+    
+    public ElectricVehicle castElectric(){
+        ElectricVehicle ev = new ElectricVehicle(0,false,0,this.id,this.make,this.model,this.year,this.price,this.isAvailable);
+        return ev;
+    }
 }

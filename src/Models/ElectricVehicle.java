@@ -15,9 +15,9 @@ public class ElectricVehicle extends Vehicle {
     private int superChargeRate;//electric car's superchargerate
    
     
-    public ElectricVehicle(int endurance, boolean superCharge, int superChargeRate, int id, String make, String model, int year, String licence, double price, boolean isSold )
+    public ElectricVehicle(int endurance, boolean superCharge, int superChargeRate, int id, String make, String model, int year, float price, boolean isSold )
     {
-        super(id, make, model, year, licence, price, isSold);
+        super(id, make, model, "EV",year,price, isSold);
          this.endurance=endurance;
          this.superCharge=superCharge;
          this.superChargeRate=superChargeRate;         
@@ -52,5 +52,8 @@ public class ElectricVehicle extends Vehicle {
     {
         this.superChargeRate=superChargeRate;
     }
+    
+    
+    
    
 }

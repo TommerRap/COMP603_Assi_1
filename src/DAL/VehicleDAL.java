@@ -5,6 +5,9 @@
 package DAL;
 
 import Models.Car;
+import Models.ElectricVehicle;
+import Models.FuelCar;
+import Models.HybridVehicle;
 import Models.Vehicle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,5 +50,49 @@ public class VehicleDAL {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public static ElectricVehicle getEV(Vehicle car){
+        try{
+        DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "select * from EV where EV_ID = "+car.getId();
+        ResultSet rs = statement.executeQuery(query);
+        rs.next();
+        return new ElectricVehicle(rs.getInt(2),rs.getBoolean(3),rs.getInt(4),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static HybridVehicle getHybrid(Vehicle car){
+        try{
+            DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "select * from HYBRIDVEHICLE where HYBRID_VEHICLE_ID = "+car.getId();
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+            return new HybridVehicle(rs.getInt(2),rs.getBoolean(3),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public static FuelCar getFuel(Vehicle car){
+            try{
+            DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "select * from FUELVEHICLE where FUEL_ID = "+car.getId();
+            ResultSet rs = statement.executeQuery(query);
+            rs.next();
+            return new FuelCar(rs.getFloat(2),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+            
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return null;
     }
 }
