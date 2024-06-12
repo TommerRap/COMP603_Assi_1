@@ -84,6 +84,8 @@ public class MainPageGUI implements ActionListener {
          //Search Button
          JButton searchButton = new JButton("Search");
          searchButton.setBounds(760, 120, 80, 30);
+         
+         
          searchButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -312,7 +314,8 @@ public class MainPageGUI implements ActionListener {
          });
          frame.setVisible(true);
         // new DetailPageGUI(car1);
-        new DetailPageGUI(VehicleDAL.getCar(10001));
+        //new DetailPageGUI(VehicleDAL.getCar(10001));
+        new EditCarGUI(VehicleDAL.getCar(10001));
     }
 
     @Override
