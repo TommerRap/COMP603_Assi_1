@@ -33,8 +33,28 @@ public class VehicleDAL {
          DatabaseHelper db = new DatabaseHelper();
         Statement statement = db.getConnection().createStatement();
         String query = "select * from VEHICLES";
-        return statement.executeQuery(query);}catch(SQLException e){e.printStackTrace();}
+        ResultSet rs = statement.executeQuery(query);
+        return rs;
+        
+        }catch(SQLException e){e.printStackTrace();}
         return null;
+    }
+    
+     public boolean isExist(int id){
+        try{
+        DatabaseHelper db = new DatabaseHelper();
+        Statement statement = db.getConnection().createStatement();
+        String query = "select * from VEHICLES where VEHICLE_ID = "+id;
+        ResultSet rs = statement.executeQuery(query);
+        if(rs.next()){
+            statement.close();
+            return true;
+        }
+        return false;
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
     
     public ResultSet getAllEVs(){
@@ -72,7 +92,7 @@ public class VehicleDAL {
         rs.next();
         Vehicle vehicle = new Vehicle(rs.getInt(1),rs.getString("VEHICLE_MAKE"),rs.getString("VEHICLE_MODEL"),rs.getString("VEHICLE_TYPE"),rs.getInt(4),rs.getFloat("PRICE"),rs.getBoolean("AVAILABILITY"));
        
-        
+        statement.close();
         return vehicle;
         
         }catch(SQLException e){
@@ -88,7 +108,9 @@ public class VehicleDAL {
         String query = "select VEHICLE_TYPE from VEHICLES where VEHICLE_ID = "+id;
         ResultSet rs = statement.executeQuery(query);
         rs.next();
-        return rs.getString("VEHICLE_TYPE");
+        String result = rs.getString("VEHICLE_TYPE");
+        statement.close();
+        return result;
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -102,7 +124,9 @@ public class VehicleDAL {
         String query = "select * from EV where EV_ID = "+car.getId();
         ResultSet rs = statement.executeQuery(query);
         rs.next();
-        return new ElectricVehicle(rs.getInt(2),rs.getBoolean(3),rs.getInt(4),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+        ElectricVehicle ev = new ElectricVehicle(rs.getInt(2),rs.getBoolean(3),rs.getInt(4),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+        statement.close();
+        return ev;
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -117,7 +141,9 @@ public class VehicleDAL {
             String query = "select * from HYBRIDVEHICLE where HYBRID_VEHICLE_ID = "+car.getId();
             ResultSet rs = statement.executeQuery(query);
             rs.next();
-            return new HybridVehicle(rs.getInt(2),rs.getBoolean(3),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+            HybridVehicle hv = new HybridVehicle(rs.getInt(2),rs.getBoolean(3),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+            statement.close();
+            return hv;
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -131,11 +157,38 @@ public class VehicleDAL {
             String query = "select * from FUELVEHICLE where FUEL_ID = "+car.getId();
             ResultSet rs = statement.executeQuery(query);
             rs.next();
-            return new FuelCar(rs.getFloat(2),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+            FuelCar result = new FuelCar(rs.getFloat(2),car.getId(),car.getMake(),car.getModel(),car.getYear(),car.getPrice(),car.isAvailable());
+            statement.close();
+            return result;
             
             }catch(SQLException e){
                 e.printStackTrace();
             }
             return null;
+    }
+    
+    public void updateFuelCar(FuelCar car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            UpdateVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        }
+
+
+    private void UpdateVehicle(Vehicle car, Statement statement){
+        try{
+            String query = "UPDATE VEHICLES SET VEHICLE_MAKE = '"+car.getMake()+"',VEHICLE_MODEL = '"+car.getModel()+"',VEHICLE_YEAR = "+car.getYear()+",AVAILABILITY = "+car.isAvailable()+",PRICE = "+car.getPrice()+" WHERE VEHICLE_ID = "+car.getId();
+            statement.executeUpdate(query);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
     }
 }

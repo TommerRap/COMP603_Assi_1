@@ -4,6 +4,9 @@
  */
 package Models;
 
+import Control.CarsControl;
+import DAL.VehicleDAL;
+
 /**
  *
  * @author tomme
@@ -11,6 +14,9 @@ package Models;
 public class FuelCar extends Vehicle{
     private float averageFuelConsumption;
     
+    public FuelCar(){
+        super(0,"","","Fuel",0000,0,true);
+    }
     
     public FuelCar(float averageFuelConsumption, int id, String make, String model, int year, float price, boolean isAvailable )
     {
@@ -19,11 +25,11 @@ public class FuelCar extends Vehicle{
     }
     
     public FuelCar(Vehicle car){
-        super(car.getId(),car.getMake(),car.getModel(),"Fuel",car.getYear(),car.getPrice(),car.isAvailable());
-        this.averageFuelConsumption = 0;
+           super(car.getId(),car.getMake(),car.getModel(),"Fuel",car.getYear(),car.getPrice(),car.isAvailable()); 
+           this.averageFuelConsumption = 0;
     }
     
-    public void setAverageFuelConsumption(int averageFuelConsumption)
+    public void setAverageFuelConsumption(float averageFuelConsumption)
     {
         this.averageFuelConsumption=averageFuelConsumption;
     }

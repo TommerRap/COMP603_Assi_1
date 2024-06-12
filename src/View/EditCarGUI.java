@@ -4,10 +4,16 @@
  */
 package View;
 
+import Control.CarsControl;
+import DAL.VehicleDAL;
 import Models.FuelCar;
 import Models.Vehicle;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -22,20 +28,49 @@ import javax.swing.JTextField;
  *
  * @author tomme
  */
-public class EditCarGUI {
+public class EditCarGUI implements FocusListener{
     String[] bol = new String[]{"true","false"};
+    JButton saveButton;
+    JLabel idInput;
+    JTextField makeInput;
+    JTextField modelInput;
+    JTextField yearInput;
+    JComboBox avaiInput;
+    JTextField priceInput;
+
+    JTextField consInput;
+    JLabel errorMsg;
+    Vehicle car;
+    JPanel panel;
+    JFrame frame;
+    
+    CarsControl control = new CarsControl();
     public EditCarGUI(Vehicle car){
- //Setup JFrame
-        JFrame frame = new JFrame();
+        this.car=car;
+//Setup JFrame
+        frame = new JFrame();
         frame.setSize(1200,800);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        
  
         //Setup JPanel
-         JPanel panel = new JPanel();
+         panel = new JPanel();
          frame.add(panel);
          panel.setLayout(null);
-
+            
+        
          //Declare General Information
+         
+         //Error Message
+        errorMsg = new JLabel();
+        errorMsg.setBounds(650,650,500,30);
+        errorMsg.setVisible(false);
+        errorMsg.setForeground(Color.red);
+        errorMsg.setFont(new Font("Serif",Font.PLAIN,22));
+        panel.add(errorMsg);
+        
+        
          JLabel carType = new JLabel(car.getType());
          ImageIcon image =  new ImageIcon();
          try{
@@ -47,20 +82,36 @@ public class EditCarGUI {
          
          //ID
          JLabel idLabel = new JLabel("ID:");
-         JLabel idInput = new JLabel(car.getId()+"");
+         idInput = new JLabel(car.getId()+"");
+         idInput.addFocusListener(this);
          //Make
          JLabel makeLabel = new JLabel("Make:");
-         JTextField makeInput = new JTextField(car.getMake());
+          makeInput = new JTextField(car.getMake());
+          makeInput.addFocusListener(this);
          //Model
          JLabel modelLabel = new JLabel("Model:");
-         JTextField modelInput = new JTextField(car.getModel());
+          modelInput = new JTextField(car.getModel());
+          modelInput.addFocusListener(this);
          //Year
          JLabel yearLabel = new JLabel("Year:");
-         JTextField yearInput = new JTextField(car.getYear()+"");
+          yearInput = new JTextField(car.getYear()+"");
+          yearInput.addFocusListener(this);
          
         //Availability
          JLabel avaiLabel = new JLabel("Availability:");
-         JComboBox avaiInput = new JComboBox(bol);
+         avaiInput = new JComboBox(bol);
+         avaiInput.addFocusListener(this);
+         //Price
+         JLabel priceLabel = new JLabel("Price:");
+         priceInput = new JTextField(car.getPrice()+"");
+         priceInput.addFocusListener(this);
+         //Validate Button
+         JButton validateButton = new JButton("Validate");
+         
+         //SaveButton
+         
+         saveButton = new JButton("Save");
+         saveButton.setEnabled(false);
          
          if(car.isAvailable()){
                  avaiInput.setSelectedIndex(0);
@@ -113,8 +164,45 @@ public class EditCarGUI {
          panel.add(avaiInput);
          panel.add(avaiLabel);
          
+         //Allocate Price
+         priceLabel.setBounds(650,350,300,45);
+         priceLabel.setFont(new Font("Serif",Font.PLAIN,36));
+         priceInput.setBounds(950,350,150,45);
+         priceInput.setFont(new Font("Serif",Font.PLAIN,36));
+         panel.add(priceLabel);
+         panel.add(priceInput);
+         
+         //Allocate Buttons
+         validateButton.setBounds(650,700,150,45);
+         panel.add(validateButton);
+         saveButton.setBounds(850,700,150,45);
+         panel.add(saveButton);
+         saveButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                             saveCar(car);            }
+         });
+         validateButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 if(!Validate()){
+                    errorMsg.setVisible(true);
+                 }else{
+                    saveButton.setEnabled(true);
+                 }
+            }
+         });
+         
          if(car.getType().equals("Fuel")){
-            FuelCar fuelCar = new FuelCar(car);
+            FuelCar fuelCar;
+             if(control.isExist(car.getId())){
+                 fuelCar=VehicleDAL.getFuel(car);
+             }else{
+                 fuelCar = new FuelCar(car);
+             }
+                   
+            //        new FuelCar(car);
              //Allocate Type
             carType.setOpaque(true);
             carType.setBounds(650,50,75,50);
@@ -125,10 +213,11 @@ public class EditCarGUI {
             
             //Declare and Allocate FuelCons
             JLabel consLabel = new JLabel("Average Fuel Consumption:");
-            JTextField consInput = new JTextField(fuelCar.getAverageFuelConsumption()+"");
-            consLabel.setBounds(650,350,300,45);
+             consInput = new JTextField(fuelCar.getAverageFuelConsumption()+"");
+             consInput.addFocusListener(this);
+            consLabel.setBounds(650,400,300,45);
             consLabel.setFont(new Font("Serif",Font.PLAIN,22));
-            consInput.setBounds(950,350,150,45);
+            consInput.setBounds(950,400,150,45);
             consInput.setFont(new Font("Serif",Font.PLAIN,26));
             panel.add(consLabel);
             panel.add(consInput);
@@ -136,5 +225,68 @@ public class EditCarGUI {
          
          
          frame.setVisible(true);
+    }
+    
+    public void saveCar(Vehicle car){
+        if(car.getType().equals("Fuel")){
+            FuelCar fuelCar = new FuelCar();
+            fuelCar.setId(Integer.parseInt(idInput.getText()));
+            fuelCar.setMake(makeInput.getText());
+            fuelCar.setModel(modelInput.getText());
+            fuelCar.setPrice(Float.parseFloat(priceInput.getText()));
+            fuelCar.setType("Fuel");
+            fuelCar.setYear(Integer.parseInt(yearInput.getText()));
+            fuelCar.setAvailability(Boolean.parseBoolean(bol[avaiInput.getSelectedIndex()]));
+            fuelCar.setAverageFuelConsumption(Float.parseFloat(consInput.getText()));
+            control.passInFuelCar(fuelCar);
+            frame.dispose();
+        }
+    }
+    
+    public boolean Validate(){
+        if(this.car.getType().equals("Fuel")){
+            int stage = 0;
+            try{
+                switch(stage){
+                    case 0:
+                        Integer.parseInt(yearInput.getText());
+                        stage++;
+                        
+                    case 1:
+                        Float.parseFloat(priceInput.getText());
+                        stage++;
+                        
+                    case 2:
+                        Float.parseFloat(consInput.getText());
+                        stage++;
+                        break;
+                }
+               return true;
+            }catch(NumberFormatException e){
+                switch(stage){
+                    case 0:
+                        errorMsg.setText("Please Input a Valid Year Number!");
+                        break;
+                    case 1:
+                        errorMsg.setText("Please Input a Valid Price Amount!");
+                        break;
+                    case 2:
+                        errorMsg.setText("Please Input a Valid AFC Amount!");
+                        break;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        saveButton.setEnabled(false);
+        errorMsg.setVisible(false);
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
     }
 }
