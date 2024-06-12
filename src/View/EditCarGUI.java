@@ -15,6 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,7 +34,12 @@ import javax.swing.JTextField;
  * @author tomme
  */
 public class EditCarGUI implements FocusListener{
+    JLabel errorMsg;
     String[] bol = new String[]{"true","false"};
+    Vehicle car;
+    JPanel panel;
+    JFrame frame;
+    
     JButton saveButton;
     JLabel idInput;
     JTextField makeInput;
@@ -40,10 +49,10 @@ public class EditCarGUI implements FocusListener{
     JTextField priceInput;
 
     JTextField consInput;
-    JLabel errorMsg;
-    Vehicle car;
-    JPanel panel;
-    JFrame frame;
+    
+    JTextField enduranceInput;
+    JComboBox superInput;
+    JTextField rateInput;
     
     CarsControl control = new CarsControl();
     public EditCarGUI(Vehicle car){
@@ -202,8 +211,6 @@ public class EditCarGUI implements FocusListener{
              }else{
                  fuelCar = new FuelCar(car);
              }
-                   
-            //        new FuelCar(car);
              //Allocate Type
             carType.setOpaque(true);
             carType.setBounds(650,50,75,50);
@@ -229,6 +236,63 @@ public class EditCarGUI implements FocusListener{
              }else{
                  evCar = new ElectricVehicle(car);
              }
+              //Allocate Type
+            carType.setOpaque(true);
+            carType.setBounds(650,50,75,50);
+            carType.setFont(new Font("Serif",Font.PLAIN,36));
+            carType.setBackground(new Color(2,108,69));
+            carType.setForeground(Color.WHITE);
+            panel.add(carType);
+            
+            //Declare and Allocate Endurance
+            JLabel enduranceLabel = new JLabel("Endurance:");
+            enduranceInput = new JTextField(evCar.getEndurance()+"");
+            enduranceInput.addFocusListener(this);
+            enduranceLabel.setBounds(650,400,300,45);
+            enduranceLabel.setFont(new Font("Serif",Font.PLAIN,36));
+            enduranceInput.setBounds(950,400,150,45);
+            enduranceInput.setFont(new Font("Serif",Font.PLAIN,36));
+            panel.add(enduranceLabel);
+            panel.add(enduranceInput);
+            
+            //Declare and allocate superCharge
+            JLabel superLabel = new JLabel("SuperCharge Support:");
+            superInput = new JComboBox(bol);
+            if(evCar.isSuperCharge()){superInput.setSelectedIndex(0);}else{superInput.setSelectedIndex(1);}
+            superLabel.setBounds(650,450,300,45);
+            superLabel.setFont(new Font("Serif",Font.PLAIN,26));
+            superInput.setBounds(950,450,150,45);
+            superInput.addFocusListener(this);
+            superInput.setFont(new Font("Serif",Font.PLAIN,36));
+            JLabel rateLabel = new JLabel("SuperCharge Rate:");
+            rateInput = new JTextField(evCar.getSuperChargeRate()+"");
+            rateInput.addFocusListener(this);
+            rateLabel.setFont(new Font("Serif",Font.PLAIN,26));
+            rateLabel.setBounds(650,500,300,45);
+            rateInput.setBounds(950,500,150,45);
+            rateInput.setFont(new Font("Serif",Font.PLAIN,36));
+            panel.add(rateLabel);
+            panel.add(rateInput);
+            panel.add(superLabel);
+            panel.add(superInput);
+             if(!evCar.isSuperCharge()){
+                 rateLabel.setVisible(false);
+                 rateInput.setVisible(false);
+                 rateInput.setText("0");
+             }
+            superInput.addItemListener(new ItemListener(){
+                 @Override
+                 public void itemStateChanged(ItemEvent e) {
+                     if(superInput.getSelectedIndex()==0){
+                        rateLabel.setVisible(true);
+                        rateInput.setVisible(true);
+                     }else{
+                        rateLabel.setVisible(false);
+                        rateInput.setVisible(false);
+                     }
+                 }
+             });
+             
          }
          
          
@@ -248,43 +312,118 @@ public class EditCarGUI implements FocusListener{
             fuelCar.setAverageFuelConsumption(Float.parseFloat(consInput.getText()));
             control.passInFuelCar(fuelCar);
             frame.dispose();
+        }else if(car.getType().equals("EV")){
+            ElectricVehicle ev = new ElectricVehicle();
+            ev.setId(Integer.parseInt(idInput.getText()));
+            ev.setMake(makeInput.getText());
+            ev.setModel(modelInput.getText());
+            ev.setPrice(Float.parseFloat(priceInput.getText()));
+            ev.setType("EV");
+            ev.setYear(Integer.parseInt(yearInput.getText()));
+            ev.setAvailability(Boolean.parseBoolean(bol[avaiInput.getSelectedIndex()]));
+            ev.setEndurance(Integer.parseInt(enduranceInput.getText()));
+            ev.setSuperCharge(Boolean.parseBoolean(bol[superInput.getSelectedIndex()]));
+            ev.setSuperChargeRate(Integer.parseInt(rateInput.getText()));
+            control.passInEV(ev);
+            frame.dispose();
         }
     }
     
     public boolean Validate(){
-        if(this.car.getType().equals("Fuel")){
-            int stage = 0;
-            try{
+        int stage = 0;
+        try{
+            switch(stage){
+                case 0:
+                    Integer.parseInt(yearInput.getText());
+                    stage++;
+                case 1:
+                    Float.parseFloat(priceInput.getText());
+                    stage++;
+            }
+            if(car.getType().equals("Fuel")){
                 switch(stage){
-                    case 0:
-                        Integer.parseInt(yearInput.getText());
-                        stage++;
-                        
-                    case 1:
-                        Float.parseFloat(priceInput.getText());
-                        stage++;
-                        
                     case 2:
                         Float.parseFloat(consInput.getText());
-                        stage++;
-                        break;
                 }
-               return true;
-            }catch(NumberFormatException e){
+            }else if(car.getType().equals("EV")){
                 switch(stage){
-                    case 0:
-                        errorMsg.setText("Please Input a Valid Year Number!");
-                        break;
-                    case 1:
-                        errorMsg.setText("Please Input a Valid Price Amount!");
-                        break;
                     case 2:
-                        errorMsg.setText("Please Input a Valid AFC Amount!");
-                        break;
+                        Integer.parseInt(enduranceInput.getText());
+                        stage++;
+                    case 3:
+                        Integer.parseInt(rateInput.getText());
+                        stage++;
                 }
-                return false;
             }
+            
+            return true;
+        }catch(NumberFormatException e){
+                    switch (stage){
+                        case 0:
+                            errorMsg.setText("Please Input a Valid Year Number!");
+                            break;
+                        case 1:
+                            errorMsg.setText("Please Input a Valid Price Amount!");
+                            break;
+                        case 2:
+                            switch(car.getType()){
+                                case "EV":
+                                    errorMsg.setText("Please Input a Valid Endurance Amount!");
+                                    break;
+                                case "Fuel":
+                                    errorMsg.setText("Please Input a Valid AFC Amount!");
+                                    break;
+                                    
+                            }
+                            break;
+                        case 3:
+                            switch(car.getType()){
+                                case "EV":
+                                    errorMsg.setText("Please Input a Valid SuperCharge Rate!");        
+                            }
+                    }
         }
+//        if(this.car.getType().equals("Fuel")){
+//            int stage = 0;
+//            try{
+//                switch(stage){
+//                    case 0:
+//                        Integer.parseInt(yearInput.getText());
+//                        stage++;
+//                        
+//                    case 1:
+//                        Float.parseFloat(priceInput.getText());
+//                        stage++;
+//                        
+//                    case 2:
+//                        Float.parseFloat(consInput.getText());
+//                        stage++;
+//                        break;
+//                }
+//               return true;
+//            }catch(NumberFormatException e){
+//                switch(stage){
+//                    case 0:
+//                        errorMsg.setText("Please Input a Valid Year Number!");
+//                        break;
+//                    case 1:
+//                        errorMsg.setText("Please Input a Valid Price Amount!");
+//                        break;
+//                    case 2:
+//                        errorMsg.setText("Please Input a Valid AFC Amount!");
+//                        break;
+//                }
+//                return false;
+//            }
+//        }else if(this.car.getType().equals("EV")){
+//            int stage = 0;
+//            try{
+//                switch(stage){
+//                    case 0:
+//                        Integer.parseInt(yeat)
+//                }
+//            }
+//        }
         return false;
     }
 

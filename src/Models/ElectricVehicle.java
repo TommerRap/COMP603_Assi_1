@@ -14,6 +14,9 @@ public class ElectricVehicle extends Vehicle {
     private boolean superCharge;//does electric car able to supercharge
     private int superChargeRate;//electric car's superchargerate
    
+    public ElectricVehicle(){
+                super(0,"","","Fuel",0000,0,true);
+    }
     
     public ElectricVehicle(int endurance, boolean superCharge, int superChargeRate, int id, String make, String model, int year, float price, boolean isSold )
     {

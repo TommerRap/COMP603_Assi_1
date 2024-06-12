@@ -174,6 +174,17 @@ public class MainPageGUI implements ActionListener {
             }
          });
          
+         //Add EV Button
+         JButton addEV = new JButton("Add a EV");
+         addEV.setBounds(1000,110,130,50);
+         panel.add(addEV);
+         addEV.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 new EditCarGUI(new Vehicle(control.generateID(),"EV"));
+            }
+         });
+         
          /**
          * Category Button Set Ends
          */
@@ -328,7 +339,7 @@ public class MainPageGUI implements ActionListener {
          frame.setVisible(true);
         // new DetailPageGUI(car1);
         //new DetailPageGUI(VehicleDAL.getCar(10001));
-        //new EditCarGUI(VehicleDAL.getCar(10001));
+        new EditCarGUI(VehicleDAL.getCar(10006));
     }
 
     @Override

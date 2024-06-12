@@ -28,6 +28,14 @@ public class CarsControl {
         }
     }
     
+    public void passInEV(ElectricVehicle ev){
+        if(dal.isExist(ev.getId())){
+            dal.updateEV(ev);
+        }else{
+            dal.createEV(ev);
+        }
+    }
+    
     public ArrayList<Vehicle> getAllCars() throws SQLException{
         ArrayList<Vehicle> list = new ArrayList();
         ResultSet rs = dal.getAllCars();

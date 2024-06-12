@@ -180,7 +180,46 @@ public class VehicleDAL {
         }
         
         }
+public void createFuelCar(FuelCar car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "INSERT INTO FUELVEHICLE (FUEL_ID,AVERAGEFUEL) VALUES("+car.getId()+","+car.getAverageFuelConsumption()+")";
+            //String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            createVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void updateEV(ElectricVehicle car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "UPDATE EV SET ENDURANCE = " +car.getEndurance() +", ISSUPERCHARGESUPPORTED = "+car.isSuperCharge()+",SUPERCHARGERATE = "+car.getSuperChargeRate()+" WHERE EV_ID = " + car.getId(); //EV specific Updates
+            statement.executeUpdate(query);
+            UpdateVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        }
 
+    public void createEV(ElectricVehicle car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "INSERT INTO EV (EV_ID,ENDURANCE,ISSUPERCHARGESUPPORTED,SUPERCHARGERATE) VALUES("+car.getId()+","+car.getEndurance()+","+car.isSuperCharge()+","+car.getSuperChargeRate()+")";
+            //String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            createVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     private void UpdateVehicle(Vehicle car, Statement statement){
         try{
@@ -201,17 +240,5 @@ public class VehicleDAL {
         
     }
     
-    public void createFuelCar(FuelCar car){
-        try{
-             DatabaseHelper db = new DatabaseHelper();
-            Statement statement = db.getConnection().createStatement();
-            String query = "INSERT INTO FUELVEHICLE (FUEL_ID,AVERAGEFUEL) VALUES("+car.getId()+","+car.getAverageFuelConsumption()+")";
-            //String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
-            statement.executeUpdate(query);
-            createVehicle(car,statement); //General Updates
-            statement.close();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
+    
 }

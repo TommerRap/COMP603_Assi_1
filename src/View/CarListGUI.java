@@ -44,6 +44,8 @@ public class CarListGUI {
         this.totalCars = array;
         if(totalCars.size()%6!=0){
             totalPage = totalCars.size()/6 +1;
+        }else{
+            totalPage = totalCars.size()/6;
         }
         try{
         if(page==1){
