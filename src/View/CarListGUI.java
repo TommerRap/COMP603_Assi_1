@@ -33,6 +33,7 @@ public class CarListGUI {
     JLabel[] ImageDisplayFields = new JLabel[6];
     ImageIcon[] Images = new ImageIcon[6];
     JButton[] Buttons = new JButton[6];
+    JButton[] editButtons = new JButton[6];
    
     
     public CarListGUI(ArrayList<Vehicle> array){
@@ -76,14 +77,26 @@ public class CarListGUI {
                     new DetailPageGUI(car);
                 }
             });
+                editButtons[i] = new JButton("Edit");
+                editButtons[i].addActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new EditCarGUI(car);
+                    }
+                
+                });
+                
+                
                 //Configuration Position
                 if(i<3){
+                    editButtons[i].setBounds(250+(380*i),375,100,40);
                     ImageDisplayFields[i].setBounds(50+(380*i),20,300,300);
                     CarIDs[i].setBounds(50+380*i,320,50,30);
                     CarInfos[i].setBounds(50+380*i,340,150,30);
                     CarTypes[i].setBounds(50+380*i,360,50,30);
                     CarPrices[i].setBounds(50+380*i,380,100,30);
-                    Buttons[i].setBounds(250+380*i,340,100,50);
+                    Buttons[i].setBounds(250+380*i,325,100,40);
+                    panel.add(editButtons[i]);
                     panel.add(ImageDisplayFields[i]);
                     panel.add(CarIDs[i]);
                     panel.add(CarInfos[i]);
@@ -91,12 +104,14 @@ public class CarListGUI {
                     panel.add(CarPrices[i]);
                     panel.add(Buttons[i]);
                 }else{
+                    editButtons[i].setBounds(250+(380*(i-3)),800,100,40);
                     ImageDisplayFields[i].setBounds(50+(380*(i-3)),450,300,300);
                     CarIDs[i].setBounds(50+380*(i-3),750,50,30);
                     CarInfos[i].setBounds(50+380*(i-3),770,150,30);
                     CarTypes[i].setBounds(50+380*(i-3),790,50,30);
                     CarPrices[i].setBounds(50+380*(i-3),810,100,30);
-                    Buttons[i].setBounds(250+380*(i-3),770,100,50);
+                    Buttons[i].setBounds(250+380*(i-3),755,100,40);
+                    panel.add(editButtons[i]);
                     panel.add(ImageDisplayFields[i]);
                     panel.add(CarIDs[i]);
                     panel.add(CarInfos[i]);

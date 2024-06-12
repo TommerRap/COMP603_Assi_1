@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Jun 13 00:23:35 NZST 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0190-0c67-4f87-00000f800000 
+Thu Jun 13 00:32:09 NZST 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0190-0c6f-24d5-00000f800000 
 on database directory D:\Projects\COMP603_Assi_2\CarManagerDB_Ebd with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7aec35a 
 Loaded from file:/D:/Projects/COMP603_Assi_2/lib/derby.jar
 java.vendor=Oracle Corporation
