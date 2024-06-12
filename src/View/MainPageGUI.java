@@ -42,6 +42,7 @@ public class MainPageGUI implements ActionListener {
     Vehicle car1;
     Vehicle car2;
     Vehicle car3;
+    CarsControl control = new CarsControl();
     int dataCount = DatabaseHelper.getDataCount("VEHICLES");
     public MainPageGUI(){
         //Setup JFrame
@@ -160,6 +161,18 @@ public class MainPageGUI implements ActionListener {
         });
          panel.add(AllButton);
          
+         
+         //Add Fuel Button
+         
+         JButton addFuelCar = new JButton("Add a Fuel Car");
+         addFuelCar.setBounds(1000,50,130,50);
+         panel.add(addFuelCar);
+         addFuelCar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 new EditCarGUI(new Vehicle(control.generateID(),"Fuel"));
+            }
+         });
          
          /**
          * Category Button Set Ends
@@ -285,7 +298,7 @@ public class MainPageGUI implements ActionListener {
             
             @Override
             public void windowOpened(WindowEvent e) {
-                searchButton.grabFocus();
+               searchButton.grabFocus();
             }
 
             @Override
@@ -315,7 +328,7 @@ public class MainPageGUI implements ActionListener {
          frame.setVisible(true);
         // new DetailPageGUI(car1);
         //new DetailPageGUI(VehicleDAL.getCar(10001));
-        new EditCarGUI(VehicleDAL.getCar(10001));
+        //new EditCarGUI(VehicleDAL.getCar(10001));
     }
 
     @Override

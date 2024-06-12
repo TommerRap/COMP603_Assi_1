@@ -191,4 +191,27 @@ public class VehicleDAL {
         }
         
     }
+    private void createVehicle(Vehicle car, Statement statement){
+        try{
+            String query = "INSERT INTO VEHICLES (VEHICLE_ID,VEHICLE_MAKE,VEHICLE_MODEL,VEHICLE_YEAR,AVAILABILITY,PRICE,VEHICLE_TYPE) VALUES ("+car.getId()+",'"+car.getMake()+"','"+car.getModel()+"',"+car.getYear()+","+car.isAvailable()+","+car.getPrice()+",'"+car.getType()+"')";
+            statement.executeUpdate(query);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void createFuelCar(FuelCar car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "INSERT INTO FUELVEHICLE (FUEL_ID,AVERAGEFUEL) VALUES("+car.getId()+","+car.getAverageFuelConsumption()+")";
+            //String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            createVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -22,7 +22,14 @@ public class ElectricVehicle extends Vehicle {
          this.superCharge=superCharge;
          this.superChargeRate=superChargeRate;         
     }
- 
+    
+    public ElectricVehicle(Vehicle car){
+        super(car.getId(),car.getMake(),car.getModel(),"EV",car.getYear(),car.getPrice(),car.isAvailable()); 
+        this.endurance = 0;
+        this.superCharge=false;
+        this.superChargeRate = 0;
+    }
+    
     public int getEndurance()
     {
         return endurance;

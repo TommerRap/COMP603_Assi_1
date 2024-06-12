@@ -6,6 +6,7 @@ package View;
 
 import Control.CarsControl;
 import DAL.VehicleDAL;
+import Models.ElectricVehicle;
 import Models.FuelCar;
 import Models.Vehicle;
 import java.awt.Color;
@@ -221,6 +222,13 @@ public class EditCarGUI implements FocusListener{
             consInput.setFont(new Font("Serif",Font.PLAIN,26));
             panel.add(consLabel);
             panel.add(consInput);
+         }else if(car.getType().equals("EV")){
+             ElectricVehicle evCar;
+             if(control.isExist(car.getId())){
+                 evCar=VehicleDAL.getEV(car);
+             }else{
+                 evCar = new ElectricVehicle(car);
+             }
          }
          
          

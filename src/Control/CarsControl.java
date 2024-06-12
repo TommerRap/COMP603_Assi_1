@@ -4,6 +4,7 @@
  */
 package Control;
 
+import DAL.DatabaseHelper;
 import DAL.VehicleDAL;
 import Models.ElectricVehicle;
 import Models.FuelCar;
@@ -22,7 +23,9 @@ public class CarsControl {
     public void passInFuelCar(FuelCar car){
         if(dal.isExist(car.getId())){
             dal.updateFuelCar(car);
-        }else{}
+        }else{
+            dal.createFuelCar(car);
+        }
     }
     
     public ArrayList<Vehicle> getAllCars() throws SQLException{
@@ -89,6 +92,10 @@ public class CarsControl {
     
     public  boolean isExist(int id){
         return dal.isExist(id);
+    }
+    
+    public int generateID(){
+        return 10000+DatabaseHelper.getDataCount("VEHICLES")+1;
     }
     
 }

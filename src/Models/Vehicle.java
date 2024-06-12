@@ -85,8 +85,19 @@ public class Vehicle {
         this.carType = type;
     }
     
-    public ElectricVehicle castElectric(){
-        ElectricVehicle ev = new ElectricVehicle(0,false,0,this.id,this.make,this.model,this.year,this.price,this.isAvailable);
-        return ev;
+    public Vehicle(int id,String type){
+        this.id = id;
+        this.make = "";
+        this.model = "";
+        this.carType = type;
+        this.year = 0000;
+        this.price = 0;
+        this.isAvailable=true;
     }
+    
+    
+//    public ElectricVehicle castElectric(){
+//        ElectricVehicle ev = new ElectricVehicle(0,false,0,this.id,this.make,this.model,this.year,this.price,this.isAvailable);
+//        return ev;
+//    }
 }
