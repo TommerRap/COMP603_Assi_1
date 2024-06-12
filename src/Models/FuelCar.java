@@ -18,6 +18,10 @@ public class FuelCar extends Vehicle{
          this.averageFuelConsumption=averageFuelConsumption;
     }
     
+    public FuelCar(Vehicle car){
+        super(car.getId(),car.getMake(),car.getModel(),"Fuel",car.getYear(),car.getPrice(),car.isAvailable());
+        this.averageFuelConsumption = 0;
+    }
     
     public void setAverageFuelConsumption(int averageFuelConsumption)
     {

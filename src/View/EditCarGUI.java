@@ -4,6 +4,7 @@
  */
 package View;
 
+import Models.FuelCar;
 import Models.Vehicle;
 import java.awt.Color;
 import java.awt.Font;
@@ -71,6 +72,7 @@ public class EditCarGUI {
          imagePlaceHolder.setBounds(50,50,500,500);
          panel.add(imagePlaceHolder);
          
+         //Allocate ID
          idLabel.setBounds(650,100,300,45);
          idLabel.setFont(new Font("Serif",Font.PLAIN,36));
          idInput.setBounds(950,100,150,45);
@@ -78,7 +80,7 @@ public class EditCarGUI {
          panel.add(idLabel);
          panel.add(idInput);
          
-         
+         //Allocate Make
          makeLabel.setBounds(650,150,300,45);
          makeLabel.setFont(new Font("Serif",Font.PLAIN,36));
          makeInput.setBounds(950,150,150,45);
@@ -86,7 +88,7 @@ public class EditCarGUI {
          panel.add(makeInput);
          panel.add(makeLabel);
          
-         
+         //Allocate Model
          modelLabel.setBounds(650,200,300,45);
          modelLabel.setFont(new Font("Serif",Font.PLAIN,36));
          modelInput.setBounds(950,200,150,45);
@@ -94,6 +96,7 @@ public class EditCarGUI {
          panel.add(modelInput);
          panel.add(modelLabel);
          
+         //Allocate Year
          yearLabel.setBounds(650,250,300,45);
          yearLabel.setFont(new Font("Serif",Font.PLAIN,36));
          yearInput.setBounds(950,250,150,45);
@@ -101,12 +104,36 @@ public class EditCarGUI {
          panel.add(yearInput);
          panel.add(yearLabel);
          
+         
+         //Allocate Availability
          avaiLabel.setBounds(650,300,300,45);
          avaiLabel.setFont(new Font("Serif",Font.PLAIN,36));
          avaiInput.setBounds(950,300,150,45);
          avaiInput.setFont(new Font("Serif",Font.PLAIN,36));
          panel.add(avaiInput);
          panel.add(avaiLabel);
+         
+         if(car.getType().equals("Fuel")){
+            FuelCar fuelCar = new FuelCar(car);
+             //Allocate Type
+            carType.setOpaque(true);
+            carType.setBounds(650,50,75,50);
+            carType.setFont(new Font("Serif",Font.PLAIN,36));
+            carType.setBackground(new Color(255,51,51));
+            carType.setForeground(Color.WHITE);
+            panel.add(carType);
+            
+            //Declare and Allocate FuelCons
+            JLabel consLabel = new JLabel("Average Fuel Consumption:");
+            JTextField consInput = new JTextField(fuelCar.getAverageFuelConsumption()+"");
+            consLabel.setBounds(650,350,300,45);
+            consLabel.setFont(new Font("Serif",Font.PLAIN,22));
+            consInput.setBounds(950,350,150,45);
+            consInput.setFont(new Font("Serif",Font.PLAIN,26));
+            panel.add(consLabel);
+            panel.add(consInput);
+         }
+         
          
          frame.setVisible(true);
     }
