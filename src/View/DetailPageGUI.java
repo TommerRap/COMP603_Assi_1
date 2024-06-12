@@ -1,5 +1,6 @@
 package View;
 
+import Control.CarsControl;
 import DAL.VehicleDAL;
 import Models.ElectricVehicle;
 import Models.FuelCar;
@@ -7,6 +8,8 @@ import Models.HybridVehicle;
 import Models.Vehicle;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,8 +28,9 @@ import javax.swing.JPanel;
  * @author tomme
  */
 public class DetailPageGUI {
-    public DetailPageGUI(Vehicle car){
-        
+    Vehicle car;
+    public DetailPageGUI(Vehicle carInput){
+        this.car = VehicleDAL.getCar(carInput.getId());
         //Setup JFrame
         JFrame frame = new JFrame();
         frame.setSize(1200,800);
@@ -55,6 +59,14 @@ public class DetailPageGUI {
               carOperation.setText("Sold");
               carOperation.setEnabled(false);
          } 
+         carOperation.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CarsControl control = new CarsControl();
+                control.setUnavailable(car);
+                frame.dispose();
+            }
+        });
          
          //Allocate General Information
          imagePlaceHolder.setBounds(50,50,500,500);

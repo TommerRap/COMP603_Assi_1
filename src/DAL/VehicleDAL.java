@@ -19,6 +19,18 @@ import java.sql.Statement;
 public class VehicleDAL {
     //public ResultSet
     
+    public void setUnavailable(Vehicle car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "UPDATE VEHICLES SET AVAILABILITY = false WHERE VEHICLE_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
     public ResultSet searchForCar(String input){
         try{
                 DatabaseHelper db = new DatabaseHelper();

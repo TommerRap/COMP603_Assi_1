@@ -21,6 +21,10 @@ import java.util.ArrayList;
 public class CarsControl {
     VehicleDAL dal = new VehicleDAL();
     
+    public void setUnavailable(Vehicle car){
+        dal.setUnavailable(car);
+    }
+    
     public void passinHybrid(HybridVehicle hv){
         if(dal.isExist(hv.getId())){
             dal.updateHybrid(hv);

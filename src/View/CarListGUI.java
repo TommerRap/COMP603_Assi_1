@@ -25,7 +25,6 @@ import javax.swing.JPanel;
  */
 public class CarListGUI {
     
-    JButton car1Page;
     ArrayList<Vehicle> cars = new ArrayList();
     ArrayList<Vehicle> totalCars = new ArrayList();
     JLabel[] CarIDs = new JLabel[6];
@@ -36,7 +35,10 @@ public class CarListGUI {
     ImageIcon[] Images = new ImageIcon[6];
     JButton[] Buttons = new JButton[6];
     JButton[] editButtons = new JButton[6];
+    JPanel panel;
+    JFrame frame;
     int totalPage;
+    int refreshStat = 0;
     
     
     public CarListGUI(ArrayList<Vehicle> array, int page){
@@ -58,12 +60,12 @@ public class CarListGUI {
         }}catch(IndexOutOfBoundsException e){}
         
         //Setup JFrame
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setSize(1200,950);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         //Setup JPanel
-         JPanel panel = new JPanel();
+         panel = new JPanel();
          frame.add(panel);
          panel.setLayout(null);
          
@@ -101,10 +103,82 @@ public class CarListGUI {
          panel.add(nextBtn);
         }
         
+        //Refresh Button
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.setBounds(900,860,90,30);
+        refreshButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refresh();
+            }
+        });
+        panel.add(refreshButton);
          //Place Holders
+         loadCars();
+         refreshStat = 1;
+        
          
+//         //PlaceHolder 1
+//         ImageIcon image1 = new ImageIcon();
+//         try{
+//         image1 = new ImageIcon(ImageIO.read(new File("./EV.jpg")).getScaledInstance(300,300,10));
+//         }catch(Exception e){e.printStackTrace();}
+//         
+//         JLabel image1DisplayField = new JLabel(image1);
+//         JLabel car1ID = new JLabel("ID:10001");
+//         JLabel car1Info = new JLabel("2011 Audi A4");
+//         //JLabel car1Info = new JLabel(car1.getYear()+" "+ car1.getMake()+" "+car1.getModel());
+//         JLabel car1Type = new JLabel("EV");
+//         //JLabel car1Type = new JLabel(car1.getType());
+//         JLabel car1Price = new JLabel("$19999");
+//         //JLabel car1Price = new JLabel("$"+car1.getPrice());
+//
+//         car1Page = new JButton("View More");
+//         //car1Page.addActionListener(this);
+//         
+//         car1ID.setBounds(50,320,50,30);
+//         image1DisplayField.setBounds(50,20,300,300);
+//         car1Info.setBounds(50,340,150,30);
+//         car1Type.setBounds(50,360,50,30);
+//         car1Price.setBounds(50,380,100,30);
+//         car1Page.setBounds(250,340,100,50);
+//         car1Page.addActionListener(new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                car1Page = null;
+//            }
+//        });
+//         panel.add(car1ID);
+//         panel.add(image1DisplayField);
+//         panel.add(car1Info);
+//         panel.add(car1Type);
+//         panel.add(car1Price);
+//         panel.add(car1Page);
+//         
+        frame.setVisible(true);
+    }
+    
+    private void refresh(){
+        for(int i = 0;i<this.cars.size();i++){
+            this.cars.set(i,VehicleDAL.getCar(this.cars.get(i).getId()));
+        }
+        loadCars();
+    }
+    
+    private void loadCars(){
+        
         for(int i = 0; i<6; i++){
-            try{Vehicle car = cars.get(i);}catch(IndexOutOfBoundsException e){break;}
+            if(refreshStat != 0){
+            panel.remove(editButtons[i]);
+            panel.remove(ImageDisplayFields[i]);
+            panel.remove(CarIDs[i]);
+            panel.remove(CarInfos[i]);
+            panel.remove(CarTypes[i]);
+            panel.remove(CarPrices[i]);
+            panel.remove(Buttons[i]);}
+            
+            
+            try{cars.get(i);}catch(IndexOutOfBoundsException e){break;}
             if(cars.get(i)!=null){
                 Vehicle car = cars.get(i);
                 Images[i] = new ImageIcon();
@@ -145,13 +219,6 @@ public class CarListGUI {
                     CarTypes[i].setBounds(50+380*i,360,50,30);
                     CarPrices[i].setBounds(50+380*i,380,100,30);
                     Buttons[i].setBounds(250+380*i,325,100,40);
-                    panel.add(editButtons[i]);
-                    panel.add(ImageDisplayFields[i]);
-                    panel.add(CarIDs[i]);
-                    panel.add(CarInfos[i]);
-                    panel.add(CarTypes[i]);
-                    panel.add(CarPrices[i]);
-                    panel.add(Buttons[i]);
                 }else{
                     editButtons[i].setBounds(250+(380*(i-3)),800,100,40);
                     ImageDisplayFields[i].setBounds(50+(380*(i-3)),450,300,300);
@@ -160,54 +227,17 @@ public class CarListGUI {
                     CarTypes[i].setBounds(50+380*(i-3),790,50,30);
                     CarPrices[i].setBounds(50+380*(i-3),810,100,30);
                     Buttons[i].setBounds(250+380*(i-3),755,100,40);
-                    panel.add(editButtons[i]);
+                    
+                }
+                panel.add(editButtons[i]);
                     panel.add(ImageDisplayFields[i]);
                     panel.add(CarIDs[i]);
                     panel.add(CarInfos[i]);
                     panel.add(CarTypes[i]);
                     panel.add(CarPrices[i]);
                     panel.add(Buttons[i]);
-                }
+                    panel.repaint();
             }
         }
-         
-//         //PlaceHolder 1
-//         ImageIcon image1 = new ImageIcon();
-//         try{
-//         image1 = new ImageIcon(ImageIO.read(new File("./EV.jpg")).getScaledInstance(300,300,10));
-//         }catch(Exception e){e.printStackTrace();}
-//         
-//         JLabel image1DisplayField = new JLabel(image1);
-//         JLabel car1ID = new JLabel("ID:10001");
-//         JLabel car1Info = new JLabel("2011 Audi A4");
-//         //JLabel car1Info = new JLabel(car1.getYear()+" "+ car1.getMake()+" "+car1.getModel());
-//         JLabel car1Type = new JLabel("EV");
-//         //JLabel car1Type = new JLabel(car1.getType());
-//         JLabel car1Price = new JLabel("$19999");
-//         //JLabel car1Price = new JLabel("$"+car1.getPrice());
-//
-//         car1Page = new JButton("View More");
-//         //car1Page.addActionListener(this);
-//         
-//         car1ID.setBounds(50,320,50,30);
-//         image1DisplayField.setBounds(50,20,300,300);
-//         car1Info.setBounds(50,340,150,30);
-//         car1Type.setBounds(50,360,50,30);
-//         car1Price.setBounds(50,380,100,30);
-//         car1Page.setBounds(250,340,100,50);
-//         car1Page.addActionListener(new ActionListener(){
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                car1Page = null;
-//            }
-//        });
-//         panel.add(car1ID);
-//         panel.add(image1DisplayField);
-//         panel.add(car1Info);
-//         panel.add(car1Type);
-//         panel.add(car1Price);
-//         panel.add(car1Page);
-//         
-        frame.setVisible(true);
     }
 }

@@ -59,8 +59,12 @@ public class EditCarGUI implements FocusListener{
     JComboBox PHEVInput;
     
     CarsControl control = new CarsControl();
-    public EditCarGUI(Vehicle car){
-        this.car=car;
+    public EditCarGUI(Vehicle carInput){
+        if(control.isExist(carInput.getId())){
+                    this.car=VehicleDAL.getCar(carInput.getId());
+        }else{
+            this.car = carInput;
+        }
 //Setup JFrame
         frame = new JFrame();
         frame.setSize(1200,800);
