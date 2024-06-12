@@ -94,7 +94,7 @@ public class MainPageGUI implements ActionListener {
                 try {
                     ArrayList<Vehicle> result = control.searchForCar(searchBar.getText());
                     if(result!=null && result.size()!=0){
-                        new CarListGUI(result);
+                        new CarListGUI(result,1);
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(MainPageGUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,7 +118,7 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CarsControl control = new CarsControl();
-                try{new CarListGUI(control.getAllFuel());}catch(SQLException ex){ex.printStackTrace();}
+                try{new CarListGUI(control.getAllFuel(),1);}catch(SQLException ex){ex.printStackTrace();}
             }
         });
          panel.add(fuelButton);
@@ -130,7 +130,7 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CarsControl control = new CarsControl();
-                try{new CarListGUI(control.getAllHybrid());}catch(SQLException ex){ex.printStackTrace();}
+                try{new CarListGUI(control.getAllHybrid(),1);}catch(SQLException ex){ex.printStackTrace();}
             }
         });
          panel.add(hybridButton);
@@ -143,7 +143,7 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CarsControl control = new CarsControl();
-                try{new CarListGUI(control.getAllEV());}catch(SQLException ex){ex.printStackTrace();}
+                try{new CarListGUI(control.getAllEV(),1);}catch(SQLException ex){ex.printStackTrace();}
             }
         });
          panel.add(EVButton);
@@ -156,7 +156,7 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CarsControl control = new CarsControl();
-                try{new CarListGUI(control.getAllCars());}catch(SQLException ex){ex.printStackTrace();}
+                try{new CarListGUI(control.getAllCars(),1);}catch(SQLException ex){ex.printStackTrace();}
             }
         });
          panel.add(AllButton);

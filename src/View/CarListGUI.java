@@ -7,6 +7,7 @@ package View;
 import DAL.VehicleDAL;
 import Models.ElectricVehicle;
 import Models.Vehicle;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -26,6 +27,7 @@ public class CarListGUI {
     
     JButton car1Page;
     ArrayList<Vehicle> cars = new ArrayList();
+    ArrayList<Vehicle> totalCars = new ArrayList();
     JLabel[] CarIDs = new JLabel[6];
     JLabel[] CarInfos = new JLabel[6];
     JLabel[] CarTypes = new JLabel[6];
@@ -34,17 +36,26 @@ public class CarListGUI {
     ImageIcon[] Images = new ImageIcon[6];
     JButton[] Buttons = new JButton[6];
     JButton[] editButtons = new JButton[6];
-   
+    int currentPage;
+    int totalPage;
     
-    public CarListGUI(ArrayList<Vehicle> array){
-        this.cars = array;
-//        cars.add(VehicleDAL.getEV(VehicleDAL.getCar(10005)) );
-//        cars.add(VehicleDAL.getCar(10002));
-//        cars.add(VehicleDAL.getCar(10003));
-        //cars.add(VehicleDAL.getCar(10004));
-        //cars.add(VehicleDAL.getCar(10005));
-        //cars.add(VehicleDAL.getCar(10006));
-
+    
+    public CarListGUI(ArrayList<Vehicle> array, int page){
+        this.totalCars = array;
+        if(totalCars.size()%6!=0){
+            totalPage = totalCars.size()/6 +1;
+        }
+        try{
+        if(page==1){
+            for(int i = 0;i<6;i++){
+                cars.add(totalCars.get(i));
+            }
+        }else{
+            for(int i = 0;i<6;i++){
+                cars.add(totalCars.get(i+6*(page-1)));
+            }
+        }}catch(IndexOutOfBoundsException e){}
+        
         //Setup JFrame
         JFrame frame = new JFrame();
         frame.setSize(1200,950);
@@ -55,6 +66,40 @@ public class CarListGUI {
          frame.add(panel);
          panel.setLayout(null);
          
+         //Setup Page Section
+         JButton previousBtn = new JButton("Previous");
+         JButton nextBtn = new JButton("Next");
+         JLabel pageDisplay = new JLabel("Page "+page+" of "+totalPage);
+         pageDisplay.setBounds(530,850,100,50);
+         pageDisplay.setFont(new Font("Serif",Font.PLAIN,22));
+
+         panel.add(pageDisplay);
+         previousBtn.setBounds(410,860,90,30);
+         previousBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               new CarListGUI(totalCars,page-1);
+               frame.dispose();
+            }
+        });
+         
+         nextBtn.setBounds(690,860,90,30);
+         
+         nextBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CarListGUI(totalCars,page+1);
+                frame.dispose();
+            }
+        });
+         
+        if(page !=1){
+        panel.add(previousBtn);
+       }
+        if(page!=totalPage){
+         panel.add(nextBtn);
+        }
+        
          //Place Holders
          
         for(int i = 0; i<6; i++){
@@ -62,6 +107,7 @@ public class CarListGUI {
             if(cars.get(i)!=null){
                 Vehicle car = cars.get(i);
                 Images[i] = new ImageIcon();
+                
                 try{
                     Images[i] = new ImageIcon(ImageIO.read(new File("./"+car.getType()+".jpg")).getScaledInstance(300,300,10));
                 }catch(Exception e){e.printStackTrace();}
@@ -75,6 +121,7 @@ public class CarListGUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     new DetailPageGUI(car);
+                    
                 }
             });
                 editButtons[i] = new JButton("Edit");
@@ -82,6 +129,7 @@ public class CarListGUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         new EditCarGUI(car);
+                        
                     }
                 
                 });
