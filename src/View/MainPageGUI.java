@@ -7,7 +7,6 @@ package View;
 import Control.CarsControl;
 import DAL.DatabaseHelper;
 import DAL.VehicleDAL;
-import Models.Car;
 import Models.Vehicle;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -15,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -61,9 +62,24 @@ public class MainPageGUI implements ActionListener {
          
          //Search Bar
          JTextField searchBar = new JTextField(20);
-         searchBar.setText("Input your keyword here...");
+         searchBar.setText("Input your keyword here... (Case sensitive)");
          searchBar.setBounds(360,120,400,30);
+         searchBar.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e) {
+                searchBar.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(searchBar.getText().equals("")){
+                             searchBar.setText("Input your keyword here... (Case sensitive)");
+                }
+            }
+             
+         });
          panel.add(searchBar);
+         
          
          //Search Button
          JButton searchButton = new JButton("Search");
@@ -83,7 +99,7 @@ public class MainPageGUI implements ActionListener {
             }
    });
          panel.add(searchButton);
-         
+                 
          System.out.println(searchBar.getText());
       
          
@@ -263,6 +279,37 @@ public class MainPageGUI implements ActionListener {
          panel.add(car3Page);
          
          
+         frame.addWindowListener(new WindowListener(){
+            
+            @Override
+            public void windowOpened(WindowEvent e) {
+                searchButton.grabFocus();
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            }
+         });
          frame.setVisible(true);
         // new DetailPageGUI(car1);
         new DetailPageGUI(VehicleDAL.getCar(10001));
