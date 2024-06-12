@@ -8,6 +8,7 @@ import DAL.DatabaseHelper;
 import DAL.VehicleDAL;
 import Models.ElectricVehicle;
 import Models.FuelCar;
+import Models.HybridVehicle;
 import Models.Vehicle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,17 @@ import java.util.ArrayList;
  */
 public class CarsControl {
     VehicleDAL dal = new VehicleDAL();
+    
+    public void passinHybrid(HybridVehicle hv){
+        if(dal.isExist(hv.getId())){
+            dal.updateHybrid(hv);
+
+        }else{
+            dal.createHybrid(hv);
+        }
+    
+
+}
     
     public void passInFuelCar(FuelCar car){
         if(dal.isExist(car.getId())){

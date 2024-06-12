@@ -220,7 +220,33 @@ public void createFuelCar(FuelCar car){
             e.printStackTrace();
         }
     }
-
+    
+    public void updateHybrid(HybridVehicle car){
+        try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "UPDATE HYBRIDVEHICLE SET FUELONLYENDURANCE = " +car.getFuelOnlyEndurance() +", ISPHEV = "+car.isPlugIn()+" WHERE HYBRID_VEHICLE_ID = " + car.getId(); //EV specific Updates
+            statement.executeUpdate(query);
+            UpdateVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void createHybrid(HybridVehicle car){
+         try{
+             DatabaseHelper db = new DatabaseHelper();
+            Statement statement = db.getConnection().createStatement();
+            String query = "INSERT INTO HYBRIDVEHICLE (HYBRID_VEHICLE_ID,FUELONLYENDURANCE,ISPHEV) VALUES("+car.getId()+","+car.getFuelOnlyEndurance()+","+car.isPlugIn()+")";
+            //String query = "UPDATE FUELVEHICLE SET AVERAGEFUEL = " +car.getAverageFuelConsumption() +" WHERE FUEL_ID = " + car.getId(); //Fuel specific Updates
+            statement.executeUpdate(query);
+            createVehicle(car,statement); //General Updates
+            statement.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     private void UpdateVehicle(Vehicle car, Statement statement){
         try{
             String query = "UPDATE VEHICLES SET VEHICLE_MAKE = '"+car.getMake()+"',VEHICLE_MODEL = '"+car.getModel()+"',VEHICLE_YEAR = "+car.getYear()+",AVAILABILITY = "+car.isAvailable()+",PRICE = "+car.getPrice()+" WHERE VEHICLE_ID = "+car.getId();

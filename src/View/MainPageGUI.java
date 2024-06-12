@@ -63,7 +63,7 @@ public class MainPageGUI implements ActionListener {
          
          //Search Bar
          JTextField searchBar = new JTextField(20);
-         searchBar.setText("Input your keyword here... (Case sensitive)");
+         searchBar.setText("Search for make,model,year... (Case sensitive)");
          searchBar.setBounds(360,120,400,30);
          searchBar.addFocusListener(new FocusListener(){
             @Override
@@ -74,7 +74,7 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void focusLost(FocusEvent e) {
                 if(searchBar.getText().equals("")){
-                             searchBar.setText("Input your keyword here... (Case sensitive)");
+                             searchBar.setText("Search for make,model,year... (Case sensitive)");
                 }
             }
              
@@ -182,6 +182,17 @@ public class MainPageGUI implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                  new EditCarGUI(new Vehicle(control.generateID(),"EV"));
+            }
+         });
+         
+         //Add Hybrid Button
+         JButton addHybrid = new JButton("Add a Hybrid Car");
+         addHybrid.setBounds(1000,170,130,50);
+         panel.add(addHybrid);
+         addHybrid.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 new EditCarGUI(new Vehicle(control.generateID(),"Hybrid"));
             }
          });
          
@@ -339,7 +350,7 @@ public class MainPageGUI implements ActionListener {
          frame.setVisible(true);
         // new DetailPageGUI(car1);
         //new DetailPageGUI(VehicleDAL.getCar(10001));
-        new EditCarGUI(VehicleDAL.getCar(10006));
+        new EditCarGUI(VehicleDAL.getCar(10004));
     }
 
     @Override

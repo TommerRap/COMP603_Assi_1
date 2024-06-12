@@ -36,7 +36,6 @@ public class CarListGUI {
     ImageIcon[] Images = new ImageIcon[6];
     JButton[] Buttons = new JButton[6];
     JButton[] editButtons = new JButton[6];
-    int currentPage;
     int totalPage;
     
     

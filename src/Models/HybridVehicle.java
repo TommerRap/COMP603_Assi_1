@@ -10,21 +10,31 @@ package Models;
  */
 public class HybridVehicle extends Vehicle{
     private int fuelOnlyEndurance;//does this hybridcar support fuelonly endurance
-    private boolean plugIn;//does this hybrid car support both fuel and elecrtric endurance
+    private boolean isPlugIn;//does this hybrid car support both fuel and elecrtric endurance
     
      public HybridVehicle(int fuelOnlyEndurance, boolean plugIn, int id, String make, String model, int year, float price, boolean isAvailable )
     {
         super(id, make, model, "Hybrid",year,price, isAvailable);
         this.fuelOnlyEndurance=fuelOnlyEndurance;
-        this.plugIn=plugIn;
+        this.isPlugIn=plugIn;
     }
     
+     public HybridVehicle(){
+        super(0,"","","Fuel",0000,0,true);
+     }
      
+     public HybridVehicle(Vehicle car){
+
+        super(car.getId(),car.getMake(),car.getModel(),"EV",car.getYear(),car.getPrice(),car.isAvailable()); 
+        this.fuelOnlyEndurance = 0;
+        this.isPlugIn = false;
+   
+     }
   
      
      public boolean isPlugIn()
      {
-         return plugIn;
+         return isPlugIn;
      }
     
      public int getFuelOnlyEndurance()
@@ -34,7 +44,7 @@ public class HybridVehicle extends Vehicle{
      
      public void setPlugIn(boolean plugIn)
      {
-         this.plugIn=plugIn;
+         this.isPlugIn=plugIn;
      }
      public void setFuelOnlyEndurance(int fuelOnlyEndurance)
      {

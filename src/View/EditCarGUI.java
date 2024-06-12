@@ -8,6 +8,7 @@ import Control.CarsControl;
 import DAL.VehicleDAL;
 import Models.ElectricVehicle;
 import Models.FuelCar;
+import Models.HybridVehicle;
 import Models.Vehicle;
 import java.awt.Color;
 import java.awt.Font;
@@ -53,6 +54,9 @@ public class EditCarGUI implements FocusListener{
     JTextField enduranceInput;
     JComboBox superInput;
     JTextField rateInput;
+    
+    JTextField fuelEndInput;
+    JComboBox PHEVInput;
     
     CarsControl control = new CarsControl();
     public EditCarGUI(Vehicle car){
@@ -292,10 +296,50 @@ public class EditCarGUI implements FocusListener{
                      }
                  }
              });
+         }else{
+             //Hybrid Obj
+             HybridVehicle hv;
+             if(control.isExist(car.getId())){
+                 hv=VehicleDAL.getHybrid(car);
+             }else{
+                 hv = new HybridVehicle(car);
+             }
              
+            //Allocate Type Display
+            carType.setOpaque(true);
+            carType.setBounds(650,50,100,50);
+            carType.setFont(new Font("Serif",Font.PLAIN,36));
+            carType.setBackground(new Color(48,86,121));
+            carType.setForeground(Color.WHITE);
+            panel.add(carType);
+            
+            //Allocate Fuel Only Endurance
+            JLabel fuelEndLabel = new JLabel("Fuel-Only Endurance:");
+            fuelEndLabel.setFont(new Font("Serif",Font.PLAIN,22));
+            fuelEndLabel.setBounds(650,400,300,45);
+            fuelEndInput = new JTextField(hv.getFuelOnlyEndurance()+"");
+            fuelEndInput.setBounds(950,400,150,45);
+            fuelEndInput.setFont(new Font("Serif",Font.PLAIN,36));
+            fuelEndInput.addFocusListener(this);
+            panel.add(fuelEndLabel);
+            panel.add(fuelEndInput);
+            
+            JLabel PHEVLabel = new JLabel("PHEV");
+            PHEVLabel.setFont(new Font("Serif",Font.PLAIN,36));
+            PHEVLabel.setBounds(650,450,300,45);
+            PHEVInput = new JComboBox(bol);
+            if(!hv.isPlugIn()){
+                PHEVInput.setSelectedIndex(1);
          }
+            PHEVInput.setBounds(950,450,150,45);
+            PHEVInput.setFont(new Font("Serif",Font.PLAIN,36));
+            PHEVInput.addFocusListener(this);
+            panel.add(PHEVLabel);
+            panel.add(PHEVInput);
+            
+
          
-         
+         }
          frame.setVisible(true);
     }
     
@@ -326,6 +370,19 @@ public class EditCarGUI implements FocusListener{
             ev.setSuperChargeRate(Integer.parseInt(rateInput.getText()));
             control.passInEV(ev);
             frame.dispose();
+        }else{
+            HybridVehicle hv = new HybridVehicle();
+            hv.setId(Integer.parseInt(idInput.getText()));
+            hv.setMake(makeInput.getText());
+            hv.setModel(modelInput.getText());
+            hv.setPrice(Float.parseFloat(priceInput.getText()));
+            hv.setYear(Integer.parseInt(yearInput.getText()));
+            hv.setType("Hybrid");
+            hv.setAvailability(Boolean.parseBoolean(bol[avaiInput.getSelectedIndex()]));
+            hv.setFuelOnlyEndurance(Integer.parseInt(fuelEndInput.getText()));
+            hv.setPlugIn(Boolean.parseBoolean(bol[PHEVInput.getSelectedIndex()]));
+            control.passinHybrid(hv);
+            frame.dispose();
         }
     }
     
@@ -354,6 +411,11 @@ public class EditCarGUI implements FocusListener{
                         Integer.parseInt(rateInput.getText());
                         stage++;
                 }
+            }else{
+                switch(stage){
+                    case 2:
+                        Integer.parseInt(fuelEndInput.getText());
+                }
             }
             
             return true;
@@ -373,6 +435,8 @@ public class EditCarGUI implements FocusListener{
                                 case "Fuel":
                                     errorMsg.setText("Please Input a Valid AFC Amount!");
                                     break;
+                                case "Hybrid":
+                                    errorMsg.setText("Please Input a Valid Fuel-only Endurance Number!");
                                     
                             }
                             break;
