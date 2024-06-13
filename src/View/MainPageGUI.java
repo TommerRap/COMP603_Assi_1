@@ -40,7 +40,7 @@ public class MainPageGUI implements ActionListener {
     JButton car2Page;
     JButton car3Page;
     Vehicle car1;
-    Vehicle car2;
+    Vehicle car2; 
     Vehicle car3;
     CarsControl control = new CarsControl();
     int dataCount = DatabaseHelper.getDataCount("VEHICLES");
@@ -350,7 +350,7 @@ public class MainPageGUI implements ActionListener {
          frame.setVisible(true);
         // new DetailPageGUI(car1);
         //new DetailPageGUI(VehicleDAL.getCar(10001));
-        new EditCarGUI(VehicleDAL.getCar(10004));
+        //new EditCarGUI(VehicleDAL.getCar(10004));
     }
 
     @Override

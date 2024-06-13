@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 public class DetailPageGUI {
     Vehicle car;
     public DetailPageGUI(Vehicle carInput){
+        //Fetch Vehicle from DB
         this.car = VehicleDAL.getCar(carInput.getId());
         //Setup JFrame
         JFrame frame = new JFrame();
