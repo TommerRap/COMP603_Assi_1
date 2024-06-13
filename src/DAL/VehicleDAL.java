@@ -14,7 +14,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author tomme
+ * @author Tommer & Jason
  */
 public class VehicleDAL {
     //public ResultSet

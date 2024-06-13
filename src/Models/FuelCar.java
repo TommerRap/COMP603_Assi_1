@@ -9,7 +9,7 @@ import DAL.VehicleDAL;
 
 /**
  *
- * @author tomme
+ * @author Tommer
  */
 public class FuelCar extends Vehicle{
     private float averageFuelConsumption;

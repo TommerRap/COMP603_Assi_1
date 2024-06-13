@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author tomme
+ * @author Jason
  */
 public class DetailPageGUI {
     Vehicle car;

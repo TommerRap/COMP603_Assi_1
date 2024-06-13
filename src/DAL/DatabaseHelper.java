@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author Tommer Hu 22160969
+ * @author Jason
  */
 public class DatabaseHelper {
     

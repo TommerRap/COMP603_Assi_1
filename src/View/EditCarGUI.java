@@ -32,7 +32,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author tomme
+ * @author Tommer
  */
 public class EditCarGUI implements FocusListener{
     JLabel errorMsg;

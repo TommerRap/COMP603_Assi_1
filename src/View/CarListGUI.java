@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author tomme
+ * @author Tommer
  */
 public class CarListGUI {
     

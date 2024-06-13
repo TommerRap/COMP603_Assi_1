@@ -6,9 +6,12 @@
             <file>file:/D:/Projects/COMP603_Assi_2/src/View/EditCarGUI.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/DAL/VehicleDAL.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/Models/HybridVehicle.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/DAL/DatabaseHelper.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/Models/FuelCar.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/Control/CarsControl.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/View/MainPageGUI.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/View/CarListGUI.java</file>
+            <file>file:/D:/Projects/COMP603_Assi_2/src/Models/Vehicle.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/Application/Main.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/Models/ElectricVehicle.java</file>
             <file>file:/D:/Projects/COMP603_Assi_2/src/View/DetailPageGUI.java</file>
